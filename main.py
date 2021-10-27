@@ -19,7 +19,7 @@ y_bg = SCREEN_HEIGHT - bg_height
 
 def main():
 
-#test
+#test2
 
     # BG = pygame.transform.scale(BG, (SCREEN_WIDTH, SCREEN_HEIGHT))
     run = True
