@@ -6,9 +6,9 @@ from pygame.locals import *
 import random
 import os
 
-#hello
 #Defining the constants
 WINDOW_SIZE = (WIDTH, HEIGHT) = (1000, 500)
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 #colors variables
 BLACK = (0, 0, 0)
@@ -39,7 +39,7 @@ BIRD = [
   pygame.image.load(os.path.join(IMAGE_PATH, "3. Obstacles/Bird1.png")),
   pygame.image.load(os.path.join(IMAGE_PATH, "3. Obstacles/Bird2.png"))
 ]
-
+death_count = 0
 
 def main():
   global speedgame, obstacles, screen
@@ -47,6 +47,7 @@ def main():
   #all variables
   player = Dino()
   cloud = Cloud(WIDTH)
+  # death_count = 0
 
   #screen and background settings
   screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -65,7 +66,7 @@ def main():
 
   #making the game run
   run = True
-  speedgame = 10 #speed at which the background will move
+  speedgame = 1 #speed at which the background will move
   pause = False
 
   #managing obstacles
@@ -96,6 +97,24 @@ def main():
     run = True
 
   while run:
+
+    font = pygame.font.Font("freesansbold.ttf", 30)
+
+    # if death_count == 0:
+    #     text = font.render("Press any Key to Start", True, (0, 0, 0))
+
+    # elif death_count > 0:
+    #     text = font.render("Press any Key to Restart", True, (0, 0, 0))
+          # score = font.render("Your Score: " + str(points), True, (0, 0, 0))
+          # scoreRect = score.get_rect()
+          # scoreRect.center = (WIDTH // 2, HEIGHT // 2 + 50)
+          # screen.blit(score, scoreRect)
+    # textRect = text.get_rect()
+    # textRect.center = (WIDTH-100, HEIGHT // 2)
+    # screen.blit(text, textRect)
+      # screen.blit(RUNNING[0], (WIDTH // 2 - 20, HEIGHT // 2 - 140))
+    # pygame.display.update()
+
 
     #we make the run possible to quit:
     for event in pygame.event.get():
@@ -143,6 +162,11 @@ def main():
       obstacle.draw(screen)
       obstacle.update(speedgame, obstacles)
 
+      if player.dino_rect.colliderect(obstacle.rect):
+          pygame.time.delay(2000)
+          death_count += 1
+          menu(death_count)
+
     #drawing the clouds
     cloud.draw(screen)
     cloud.update(speedgame, WIDTH)
@@ -150,9 +174,48 @@ def main():
 
 
     pygame.display.update()
+    print("death_count", death_count)
+
+
+
+def menu(death_count):
+    # global points
+    run = True
+
+    while run:
+      screen.fill(WHITE)
+      font = pygame.font.Font("freesansbold.ttf", 30)
+
+      if death_count == 0:
+          text = font.render("Press any Key to Start", True, (0, 0, 0))
+
+      elif death_count > 0:
+          text = font.render("Press any Key to Restart", True, (0, 0, 0))
+          # score = font.render("Your Score: " + str(points), True, (0, 0, 0))
+          # scoreRect = score.get_rect()
+          # scoreRect.center = (WIDTH // 2, HEIGHT // 2 + 50)
+          # screen.blit(score, scoreRect)
+      textRect = text.get_rect()
+      textRect.center = (WIDTH-100, HEIGHT // 2)
+      screen.blit(text, textRect)
+      # screen.blit(RUNNING[0], (WIDTH // 2 - 20, HEIGHT // 2 - 140))
+      pygame.display.update()
+
+
+
+      for event in pygame.event.get():
+          if event.type == pygame.QUIT:
+              print("death count",  "event.type = ", event.type, "pygame.QUIT =", pygame.type)
+              run = False
+              pygame.display.quit()
+              pygame.quit()
+              exit()
+          if event.type == pygame.KEYDOWN:
+                main()
 
 #calling the game
-main()
+
+menu(death_count=0)
+# main(death_count=0)
 
 # test
-
