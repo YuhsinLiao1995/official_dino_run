@@ -15,7 +15,7 @@ BLACK = (0, 0, 0)
 WHITE = (247, 247, 247)
 FONT_COLOR = (83, 83, 83)
 
-IMAGE_PATH = "img/"
+IMAGE_PATH = "/Users/clarabesnard/Desktop/OneDrive - CentraleSupelec/M1 2021 - 2022/Centrale/4. Python/Project/2. Chrome_dino_project/1. Code/official_dino_run/img"
 
 SMALL_CACTUS = [
     pygame.image.load(os.path.join(
