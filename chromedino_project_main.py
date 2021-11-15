@@ -206,18 +206,25 @@ def menu(ifdead):
         if ifdead == False:
             text = font.render("Press any Key to Start", True, (0, 0, 0))
             # print("ifdead", ifdead)
+            textRect = text.get_rect()
+            textRect.center = (Constants.WIDTH//2, Constants.HEIGHT // 2)
+            screen.blit(text, textRect)
+        # screen.blit(RUNNING[0], (WIDTH // 2 - 20, HEIGHT // 2 - 140))
+            pygame.display.update()
         elif ifdead == True:
-            text = font.rerender("Press any Key to Restart", True, (0, 0, 0))
+            test = str(Constants.point)
+            print("test", test)
+            text = font.render("Press any Key to Restart", True, (0, 0, 0))
             score = font.render("Your Score: " + str(Constants.point), True, (0, 0, 0))
             scoreRect = score.get_rect()
             scoreRect.center = (Constants.WIDTH // 2, Constants.HEIGHT // 2 + 50)
             screen.blit(score, scoreRect)
+            textRect = text.get_rect()
+            textRect.center = (Constants.WIDTH//2, Constants.HEIGHT // 2)
+            screen.blit(text, textRect)
+            # screen.blit(RUNNING[0], (WIDTH // 2 - 20, HEIGHT // 2 - 140))
             pygame.display.update()
-        textRect = text.get_rect()
-        textRect.center = (Constants.WIDTH//2, Constants.HEIGHT // 2)
-        screen.blit(text, textRect)
-        # screen.blit(RUNNING[0], (WIDTH // 2 - 20, HEIGHT // 2 - 140))
-        pygame.display.update()
+            Constants.point =
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
