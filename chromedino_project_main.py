@@ -6,7 +6,7 @@ from pygame.locals import *
 import random
 import os
 
-
+#hello
 #Defining the constants
 WINDOW_SIZE = (WIDTH, HEIGHT) = (1000, 500)
 
