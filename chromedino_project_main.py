@@ -9,7 +9,7 @@ from global_constants import Constants
 
 # #Defining the constants
 # WINDOW_SIZE = (WIDTH, HEIGHT) = (1000, 500)
-# screen = pygame.display.set_mode((WIDTH, HEIGHT))
+screen = pygame.display.set_mode((Constants.WIDTH, Constants.HEIGHT))
 
 # #colors variables
 # BLACK = (0, 0, 0)
@@ -46,8 +46,6 @@ from global_constants import Constants
 # death_count = 0
 
 pygame.init()
-# Contants = Constants()
-print("Constants", Constants.WHITE)
 
 
 def main():
@@ -60,7 +58,7 @@ def main():
     font = pygame.font.Font("freesansbold.ttf", 20)
 
     # screen and background settings
-    Constants.screen = pygame.display.set_mode(
+    screen = pygame.display.set_mode(
         (Constants.WIDTH, Constants.HEIGHT))
     bg_img = pygame.image.load(
         "img/1.Background/track_bis.png")  # load the track image
@@ -79,16 +77,16 @@ def main():
         font = pygame.font.Font("game_over.ttf", 70)
         text = font.render("Point: " + str(Constants.point), True, Constants.FONT_COLOR)
         textRect = text.get_rect()
-        textRect.center = (Constants.WIDTH - 150, Constants.SCREEN_HEIGHT // 3)
-        Constants.screen.blit(text, textRect)
+        textRect.center = (Constants.WIDTH - 150, Constants.HEIGHT // 3)
+        screen.blit(text, textRect)
         # print(textRect)
         pygame.display.update()
 
     # displaying the background
     img_coordinates = (x_pos, y_pos) = (
         0, Constants.HEIGHT - 5*bg_height)  # coordinates of the background
-    Constants.screen.blit(bg_img, (x_pos, y_pos))
-    Constants.screen.blit(bg_img, (x_pos + bg_width, y_pos))
+    screen.blit(bg_img, (x_pos, y_pos))
+    screen.blit(bg_img, (x_pos + bg_width, y_pos))
 
     # making the game run
     run = True
@@ -106,7 +104,7 @@ def main():
                            True, Constants.FONT_COLOR)
         text_rect = text.get_rect()
         text_rect.center = (Constants.WIDTH//2, Constants.HEIGHT//3)
-        Constants.screen.blit(text, text_rect)
+        screen.blit(text, text_rect)
         pygame.display.flip()
 
         while pause:
@@ -154,14 +152,14 @@ def main():
 
         # we make the background loop
         # we color the rest of the background in white
-        Constants.screen.fill(Constants.WHITE)
+        screen.fill(Constants.WHITE)
         # we make the image appear one time
-        Constants.screen.blit(bg_img, (x_pos, y_pos))
+        screen.blit(bg_img, (x_pos, y_pos))
         # we make the image appear a second time
-        Constants.screen.blit(bg_img, (bg_width + x_pos, y_pos))
+        screen.blit(bg_img, (bg_width + x_pos, y_pos))
 
         if x_pos <= -bg_width:
-            Constants.screen.blit(bg_img, (bg_width + x_pos, y_pos))
+            screen.blit(bg_img, (bg_width + x_pos, y_pos))
             x_pos = 0
 
         x_pos -= speedgame
@@ -171,7 +169,7 @@ def main():
         user_input = pygame.key.get_pressed()
 
         # calling the player:
-        player.draw(Constants.screen)
+        player.draw(screen)
         player.update(user_input)
 
         # Making the obstacles appear
@@ -187,45 +185,47 @@ def main():
                 obstacles.append(Bird(Constants.BIRD, Constants.WIDTH))
 
         for obstacle in obstacles:
-            obstacle.draw(Constants.screen)
+            obstacle.draw(screen)
             obstacle.update(speedgame, obstacles)
 
             if player.dino_rect.colliderect(obstacle.rect):
                 pygame.time.delay(2000)
-                death_count += 1
-                menu(death_count)
+                Constants.ifdead == True
+                menu(Constants.ifdead)
 
         # drawing the clouds
-        cloud.draw(Constants.screen)
+        cloud.draw(screen)
         cloud.update(speedgame, Constants.WIDTH)
 
         score()  # we put at the end so it does not flash
 
         pygame.display.update()
-        print("death_count", death_count)
 
 
 def menu(ifdead):
     run = True
-
+    screen = pygame.display.set_mode((Constants.WIDTH, Constants.HEIGHT))
     while run:
-        Constants.screen.fill(Constants().WHITE)
+        screen.fill(Constants.WHITE)
+        # print("screen", screen)
+
         font = pygame.font.Font("freesansbold.ttf", 30)
+        # print("ifdead", ifdead)
 
-        if ifdead == None:
+        if ifdead == False:
             text = font.render("Press any Key to Start", True, (0, 0, 0))
-
+            print("ifdead", ifdead)
         elif ifdead == True:
             text = font.render("Press any Key to Restart", True, (0, 0, 0))
             # score = font.render("Your Score: " + str(points), True, (0, 0, 0))
             # scoreRect = score.get_rect()
             # scoreRect.center = (WIDTH // 2, HEIGHT // 2 + 50)
             # screen.blit(score, scoreRect)
-            textRect = text.get_rect()
-            textRect.center = (Constants.WIDTH-100, Constants.HEIGHT // 2)
-            Constants.screen.blit(text, textRect)
-            # screen.blit(RUNNING[0], (WIDTH // 2 - 20, HEIGHT // 2 - 140))
-            pygame.display.update()
+        textRect = text.get_rect()
+        textRect.center = (Constants.WIDTH//2, Constants.HEIGHT // 2)
+        screen.blit(text, textRect)
+        # screen.blit(RUNNING[0], (WIDTH // 2 - 20, HEIGHT // 2 - 140))
+        pygame.display.update()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
