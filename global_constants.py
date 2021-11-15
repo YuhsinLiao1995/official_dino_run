@@ -1,0 +1,48 @@
+import pygame
+import random
+import os
+
+
+class Constants:
+
+    # Defining the constants
+    WINDOW_SIZE = (WIDTH, HEIGHT) = (1000, 500)
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
+
+    # colors variables
+    BLACK = (0, 0, 0)
+    WHITE = (247, 247, 247)
+    FONT_COLOR = (83, 83, 83)
+
+    SCREEN_WIDTH = 60
+    SCREEN_HEIGHT = 100
+
+    IMAGE_PATH = "img/"
+
+    SMALL_CACTUS = [
+        pygame.image.load(os.path.join(
+            IMAGE_PATH, "3. Obstacles/SmallCactus1.png")),
+        pygame.image.load(os.path.join(
+            IMAGE_PATH, "3. Obstacles/SmallCactus2.png")),
+        pygame.image.load(os.path.join(
+            IMAGE_PATH, "3. Obstacles/SmallCactus3.png")),
+    ]
+
+    LARGE_CACTUS = [
+        pygame.image.load(os.path.join(
+            IMAGE_PATH, "3. Obstacles/LargeCactus1.png")),
+        pygame.image.load(os.path.join(
+            IMAGE_PATH, "3. Obstacles/LargeCactus2.png")),
+        pygame.image.load(os.path.join(
+            IMAGE_PATH, "3. Obstacles/LargeCactus3.png")),
+    ]
+
+    BIRD = [
+        pygame.image.load(os.path.join(IMAGE_PATH, "3. Obstacles/Bird1.png")),
+        pygame.image.load(os.path.join(IMAGE_PATH, "3. Obstacles/Bird2.png"))
+    ]
+
+
+    ifdead = False
+    point = 0
