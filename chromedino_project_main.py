@@ -10,6 +10,7 @@ from global_constants import Constants
 # #Defining the constants
 # WINDOW_SIZE = (WIDTH, HEIGHT) = (1000, 500)
 screen = pygame.display.set_mode((Constants.WIDTH, Constants.HEIGHT))
+ifDead = False
 
 # #colors variables
 # BLACK = (0, 0, 0)
@@ -48,7 +49,7 @@ screen = pygame.display.set_mode((Constants.WIDTH, Constants.HEIGHT))
 pygame.init()
 
 
-def main():
+def main(ifDead):
     global speedgame, obstacles
     # pygame.init()
     # all variables
@@ -125,21 +126,6 @@ def main():
 
         font = pygame.font.Font("freesansbold.ttf", 30)
 
-        # if death_count == 0:
-        #     text = font.render("Press any Key to Start", True, (0, 0, 0))
-
-        # elif death_count > 0:
-        #     text = font.render("Press any Key to Restart", True, (0, 0, 0))
-        # score = font.render("Your Score: " + str(points), True, (0, 0, 0))
-        # scoreRect = score.get_rect()
-        # scoreRect.center = (WIDTH // 2, HEIGHT // 2 + 50)
-        # screen.blit(score, scoreRect)
-        # textRect = text.get_rect()
-        # textRect.center = (WIDTH-100, HEIGHT // 2)
-        # screen.blit(text, textRect)
-        # screen.blit(RUNNING[0], (WIDTH // 2 - 20, HEIGHT // 2 - 140))
-        # pygame.display.update()
-
         # we make the run possible to quit:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -163,7 +149,7 @@ def main():
             x_pos = 0
 
         x_pos -= speedgame
-        print(x_pos)
+        # print(x_pos)
 
         # recording the commands from the player
         user_input = pygame.key.get_pressed()
@@ -189,9 +175,13 @@ def main():
             obstacle.update(speedgame, obstacles)
 
             if player.dino_rect.colliderect(obstacle.rect):
+                print("collide", Constants.ifdead)
                 pygame.time.delay(2000)
-                Constants.ifdead == True
+                Constants.ifdead = True
+                print("Constants.ifdead", Constants.ifdead)
                 menu(Constants.ifdead)
+
+                # print("menu", Constants.ifdead)
 
         # drawing the clouds
         cloud.draw(screen)
@@ -204,6 +194,7 @@ def main():
 
 def menu(ifdead):
     run = True
+    print("menu ifdead", ifdead)
     screen = pygame.display.set_mode((Constants.WIDTH, Constants.HEIGHT))
     while run:
         screen.fill(Constants.WHITE)
@@ -214,13 +205,14 @@ def menu(ifdead):
 
         if ifdead == False:
             text = font.render("Press any Key to Start", True, (0, 0, 0))
-            print("ifdead", ifdead)
+            # print("ifdead", ifdead)
         elif ifdead == True:
-            text = font.render("Press any Key to Restart", True, (0, 0, 0))
-            # score = font.render("Your Score: " + str(points), True, (0, 0, 0))
-            # scoreRect = score.get_rect()
-            # scoreRect.center = (WIDTH // 2, HEIGHT // 2 + 50)
-            # screen.blit(score, scoreRect)
+            text = font.rerender("Press any Key to Restart", True, (0, 0, 0))
+            score = font.render("Your Score: " + str(Constants.point), True, (0, 0, 0))
+            scoreRect = score.get_rect()
+            scoreRect.center = (Constants.WIDTH // 2, Constants.HEIGHT // 2 + 50)
+            screen.blit(score, scoreRect)
+            pygame.display.update()
         textRect = text.get_rect()
         textRect.center = (Constants.WIDTH//2, Constants.HEIGHT // 2)
         screen.blit(text, textRect)
@@ -229,14 +221,12 @@ def menu(ifdead):
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                print("death count",  "event.type = ",
-                      event.type, "pygame.QUIT =", pygame.type)
                 run = False
                 pygame.display.quit()
                 pygame.quit()
                 exit()
             if event.type == pygame.KEYDOWN:
-                main()
+                main(ifDead)
 
 # calling the game
 menu(Constants.ifdead)
