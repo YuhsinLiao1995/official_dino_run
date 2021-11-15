@@ -15,6 +15,9 @@ BLACK = (0, 0, 0)
 WHITE = (247, 247, 247)
 FONT_COLOR = (83, 83, 83)
 
+SCREEN_WIDTH = 60
+SCREEN_HEIGHT = 100
+
 IMAGE_PATH = "img/"
 
 SMALL_CACTUS = [
@@ -42,12 +45,15 @@ BIRD = [
 death_count = 0
 
 def main():
-  global speedgame, obstacles, screen
+  global speedgame, obstacles, screen, point
   pygame.init()
   #all variables
   player = Dino()
   cloud = Cloud(WIDTH)
-  # death_count = 0
+  point = 0
+  font = pygame.font.Font("freesansbold.ttf", 20)
+
+
 
   #screen and background settings
   screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -58,6 +64,18 @@ def main():
   logo = pygame.image.load(os.path.join(IMAGE_PATH, "1.Background/Logo.png"))
   pygame.display.set_icon(logo)
   pygame.display.set_caption("Chrome Dino Runner")
+
+
+  def score():
+    global point, speedgame
+    point += 1
+    font = pygame.font.Font("game_over.ttf", 70)
+    text = font.render("Point: " + str(point), True, FONT_COLOR)
+    textRect = text.get_rect()
+    textRect.center = (WIDTH - 150, SCREEN_HEIGHT // 3)
+    screen.blit(text, textRect)
+    #print(textRect)
+    pygame.display.update()
 
   #displaying the background
   img_coordinates = (x_pos, y_pos) = (0, HEIGHT - 5*bg_height) #coordinates of the background
@@ -127,6 +145,8 @@ def main():
         paused()
 
 
+
+
     #we make the background loop
     screen.fill(WHITE) #we color the rest of the background in white
     screen.blit(bg_img, (x_pos, y_pos)) #we make the image appear one time
@@ -137,7 +157,7 @@ def main():
       x_pos = 0
 
     x_pos -= speedgame
-
+    print(x_pos)
 
 
     #recording the commands from the player
@@ -157,7 +177,7 @@ def main():
       else:
         obstacles.append(Bird(BIRD, WIDTH))
 
-    #drawing the obstacles in the window
+
     for obstacle in obstacles:
       obstacle.draw(screen)
       obstacle.update(speedgame, obstacles)
@@ -171,6 +191,7 @@ def main():
     cloud.draw(screen)
     cloud.update(speedgame, WIDTH)
 
+    score() #we put at the end so it does not flash
 
 
     pygame.display.update()
@@ -179,11 +200,12 @@ def main():
 
 
 def menu(death_count):
-    # global points
+    global point
     run = True
 
     while run:
       screen.fill(WHITE)
+      pygame.font.Font
       font = pygame.font.Font("freesansbold.ttf", 30)
 
       if death_count == 0:
@@ -201,8 +223,6 @@ def menu(death_count):
       # screen.blit(RUNNING[0], (WIDTH // 2 - 20, HEIGHT // 2 - 140))
       pygame.display.update()
 
-
-
       for event in pygame.event.get():
           if event.type == pygame.QUIT:
               print("death count",  "event.type = ", event.type, "pygame.QUIT =", pygame.type)
@@ -217,5 +237,3 @@ def menu(death_count):
 
 menu(death_count=0)
 # main(death_count=0)
-
-# test
