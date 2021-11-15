@@ -9,16 +9,16 @@ from global_constants import Constants
 
 # #Defining the constants
 # WINDOW_SIZE = (WIDTH, HEIGHT) = (1000, 500)
-screen = pygame.display.set_mode((Constants.WIDTH, Constants.HEIGHT))
-ifDead = False
+# screen = pygame.display.set_mode((Constants.WIDTH, Constants.HEIGHT))
+# ifDead = False
 
 # #colors variables
 # BLACK = (0, 0, 0)
 # WHITE = (247, 247, 247)
 # FONT_COLOR = (83, 83, 83)
 
-# SCREEN_WIDTH = 60
-# SCREEN_HEIGHT = 100
+# Constants.screen_WIDTH = 60
+# Constants.screen_HEIGHT = 100
 
 # IMAGE_PATH = "img/"
 
@@ -49,18 +49,20 @@ ifDead = False
 pygame.init()
 
 
-def main(ifDead):
+def startRun(ifDead):
     global speedgame, obstacles
     # pygame.init()
     # all variables
+    Constants.point = 0
+    Constants.ifdead = False
     player = Dino()
     cloud = Cloud(Constants.WIDTH)
     # point = 0
     font = pygame.font.Font("freesansbold.ttf", 20)
 
     # screen and background settings
-    screen = pygame.display.set_mode(
-        (Constants.WIDTH, Constants.HEIGHT))
+    # Constants.screen = pygame.display.set_mode(
+    #     (Constants.WIDTH, Constants.HEIGHT))
     bg_img = pygame.image.load(
         "img/1.Background/track_bis.png")  # load the track image
     bg_size = (bg_width, bg_height) = (bg_img.get_width(),
@@ -79,19 +81,18 @@ def main(ifDead):
         text = font.render("Point: " + str(Constants.point), True, Constants.FONT_COLOR)
         textRect = text.get_rect()
         textRect.center = (Constants.WIDTH - 150, Constants.HEIGHT // 3)
-        screen.blit(text, textRect)
-        # print(textRect)
+        Constants.screen.blit(text, textRect)
         pygame.display.update()
 
     # displaying the background
     img_coordinates = (x_pos, y_pos) = (
         0, Constants.HEIGHT - 5*bg_height)  # coordinates of the background
-    screen.blit(bg_img, (x_pos, y_pos))
-    screen.blit(bg_img, (x_pos + bg_width, y_pos))
+    Constants.screen.blit(bg_img, (x_pos, y_pos))
+    Constants.screen.blit(bg_img, (x_pos + bg_width, y_pos))
 
     # making the game run
     run = True
-    speedgame = 1  # speed at which the background will move
+    speedgame = 10  # speed at which the background will move
     pause = False
 
     # managing obstacles
@@ -105,7 +106,7 @@ def main(ifDead):
                            True, Constants.FONT_COLOR)
         text_rect = text.get_rect()
         text_rect.center = (Constants.WIDTH//2, Constants.HEIGHT//3)
-        screen.blit(text, text_rect)
+        Constants.screen.blit(text, text_rect)
         pygame.display.flip()
 
         while pause:
@@ -138,24 +139,24 @@ def main(ifDead):
 
         # we make the background loop
         # we color the rest of the background in white
-        screen.fill(Constants.WHITE)
+        Constants.screen.fill(Constants.WHITE)
         # we make the image appear one time
-        screen.blit(bg_img, (x_pos, y_pos))
+        Constants.screen.blit(bg_img, (x_pos, y_pos))
         # we make the image appear a second time
-        screen.blit(bg_img, (bg_width + x_pos, y_pos))
+        Constants.screen.blit(bg_img, (bg_width + x_pos, y_pos))
 
         if x_pos <= -bg_width:
-            screen.blit(bg_img, (bg_width + x_pos, y_pos))
+            Constants.screen.blit(bg_img, (bg_width + x_pos, y_pos))
             x_pos = 0
 
         x_pos -= speedgame
-        # print(x_pos)
+        print(x_pos)
 
         # recording the commands from the player
         user_input = pygame.key.get_pressed()
 
         # calling the player:
-        player.draw(screen)
+        player.draw(Constants.screen)
         player.update(user_input)
 
         # Making the obstacles appear
@@ -171,20 +172,17 @@ def main(ifDead):
                 obstacles.append(Bird(Constants.BIRD, Constants.WIDTH))
 
         for obstacle in obstacles:
-            obstacle.draw(screen)
+            obstacle.draw(Constants.screen)
             obstacle.update(speedgame, obstacles)
 
             if player.dino_rect.colliderect(obstacle.rect):
-                print("collide", Constants.ifdead)
+
                 pygame.time.delay(2000)
                 Constants.ifdead = True
-                print("Constants.ifdead", Constants.ifdead)
                 menu(Constants.ifdead)
 
-                # print("menu", Constants.ifdead)
-
         # drawing the clouds
-        cloud.draw(screen)
+        cloud.draw(Constants.screen)
         cloud.update(speedgame, Constants.WIDTH)
 
         score()  # we put at the end so it does not flash
@@ -194,37 +192,26 @@ def main(ifDead):
 
 def menu(ifdead):
     run = True
-    print("menu ifdead", ifdead)
-    screen = pygame.display.set_mode((Constants.WIDTH, Constants.HEIGHT))
+    Constants.screen = pygame.display.set_mode((Constants.WIDTH, Constants.HEIGHT))
     while run:
-        screen.fill(Constants.WHITE)
-        # print("screen", screen)
+        Constants.screen.fill(Constants.WHITE)
 
         font = pygame.font.Font("freesansbold.ttf", 30)
-        # print("ifdead", ifdead)
 
         if ifdead == False:
             text = font.render("Press any Key to Start", True, (0, 0, 0))
-            # print("ifdead", ifdead)
-            textRect = text.get_rect()
-            textRect.center = (Constants.WIDTH//2, Constants.HEIGHT // 2)
-            screen.blit(text, textRect)
-        # screen.blit(RUNNING[0], (WIDTH // 2 - 20, HEIGHT // 2 - 140))
-            pygame.display.update()
+
         elif ifdead == True:
-            test = str(Constants.point)
-            print("test", test)
             text = font.render("Press any Key to Restart", True, (0, 0, 0))
             score = font.render("Your Score: " + str(Constants.point), True, (0, 0, 0))
             scoreRect = score.get_rect()
             scoreRect.center = (Constants.WIDTH // 2, Constants.HEIGHT // 2 + 50)
-            screen.blit(score, scoreRect)
-            textRect = text.get_rect()
-            textRect.center = (Constants.WIDTH//2, Constants.HEIGHT // 2)
-            screen.blit(text, textRect)
-            # screen.blit(RUNNING[0], (WIDTH // 2 - 20, HEIGHT // 2 - 140))
-            pygame.display.update()
-            Constants.point =
+            Constants.screen.blit(score, scoreRect)
+
+        textRect = text.get_rect()
+        textRect.center = (Constants.WIDTH//2, Constants.HEIGHT // 2)
+        Constants.screen.blit(text, textRect)
+        pygame.display.update()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -233,7 +220,7 @@ def menu(ifdead):
                 pygame.quit()
                 exit()
             if event.type == pygame.KEYDOWN:
-                main(ifDead)
+                startRun(Constants.ifdead)
 
 # calling the game
 menu(Constants.ifdead)
