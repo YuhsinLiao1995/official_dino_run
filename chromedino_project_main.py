@@ -6,8 +6,6 @@ import random
 import os
 from global_parameters import Parameters
 import pygame
-# from menu_def import menu
-# from start_run_def import startRun
 
 pygame.init()
 
