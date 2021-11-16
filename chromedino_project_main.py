@@ -22,12 +22,13 @@ def startRun():
     pygame.display.set_caption("Chrome Dino Runner")
 
     def score():
-        global  speedgame
+        global speedgame
         Parameters.point += 1
         font = pygame.font.Font("game_over.ttf", 70)
-        text = font.render("Point: " + str(Parameters.point), True, Parameters.FONT_COLOR)
+        text = font.render("Point: " + str(Parameters.point),
+                           True, Parameters.FONT_COLOR)
         textRect = text.get_rect()
-        textRect.center = (Parameters.WIDTH - 150, Parameters.HEIGHT // 3)
+        textRect.center = (Parameters.WIDTH - 150, Parameters.HEIGHT // 4.5)
         Parameters.screen.blit(text, textRect)
         pygame.display.update()
 
@@ -35,21 +36,23 @@ def startRun():
     img_coordinates = (x_pos, y_pos) = (
         0, Parameters.HEIGHT - 5*Parameters.bg_height)  # coordinates of the background
     Parameters.screen.blit(Parameters.bg_img, (x_pos, y_pos))
-    Parameters.screen.blit(Parameters.bg_img, (x_pos + Parameters.bg_width, y_pos))
+    Parameters.screen.blit(
+        Parameters.bg_img, (x_pos + Parameters.bg_width, y_pos))
 
     # making the game run
+    global run
     run = True
     speedgame = 10  # speed at which the background will move
-    pause = False
 
     # managing obstacles
     obstacles = []
 
     # managing pause and unpause
     def paused():
+        global run
         pause = True
         font = pygame.font.Font("game_over.ttf", 90)
-        text = font.render("Game Paused, Press 'u' to Unpause",
+        text = font.render("Game Paused, Press 'r' to Resume",
                            True, Parameters.FONT_COLOR)
         text_rect = text.get_rect()
         text_rect.center = (Parameters.WIDTH//2, Parameters.HEIGHT//3)
@@ -61,18 +64,12 @@ def startRun():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     quit()
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_u:
-                    pause = False
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
                     run = True
+                    pause = False
 
-    def unpause():
-        print("we want to unpause")
-        pause = False
-        run = True
 
     while run:
-
-        # font = pygame.font.Font("freesansbold.ttf", 30)
 
         # we make the run possible to quit:
         for event in pygame.event.get():
@@ -90,14 +87,16 @@ def startRun():
         # we make the image appear one time
         Parameters.screen.blit(Parameters.bg_img, (x_pos, y_pos))
         # we make the image appear a second time
-        Parameters.screen.blit(Parameters.bg_img, (Parameters.bg_width + x_pos, y_pos))
+        Parameters.screen.blit(
+            Parameters.bg_img, (Parameters.bg_width + x_pos, y_pos))
 
         if x_pos <= -Parameters.bg_width:
-            Parameters.screen.blit(Parameters.bg_img, (Parameters.bg_width + x_pos, y_pos))
+            Parameters.screen.blit(
+                Parameters.bg_img, (Parameters.bg_width + x_pos, y_pos))
             x_pos = 0
 
         x_pos -= speedgame
-        print(x_pos)
+        print("x_pos", x_pos)
 
         # recording the commands from the player
         user_input = pygame.key.get_pressed()
@@ -123,7 +122,6 @@ def startRun():
             obstacle.update(speedgame, obstacles)
 
             if player.dino_rect.colliderect(obstacle.rect):
-
                 pygame.time.delay(2000)
                 Parameters.ifdead = True
                 menu(Parameters.ifdead)
@@ -139,20 +137,24 @@ def startRun():
 
 def menu(ifdead):
     run = True
-    Parameters.screen = pygame.display.set_mode((Parameters.WIDTH, Parameters.HEIGHT))
+    Parameters.screen = pygame.display.set_mode(
+        (Parameters.WIDTH, Parameters.HEIGHT))
     while run:
         Parameters.screen.fill(Parameters.WHITE)
 
         font = pygame.font.Font("freesansbold.ttf", 30)
 
         if ifdead is False:
+
             text = font.render("Press any Key to Start", True, (0, 0, 0))
 
         elif ifdead is True:
             text = font.render("Press any Key to Restart", True, (0, 0, 0))
-            score = font.render("Your Score: " + str(Parameters.point), True, (0, 0, 0))
+            score = font.render(
+                "Your Score: " + str(Parameters.point), True, (0, 0, 0))
             scoreRect = score.get_rect()
-            scoreRect.center = (Parameters.WIDTH // 2, Parameters.HEIGHT // 2 + 50)
+            scoreRect.center = (Parameters.WIDTH // 2,
+                                Parameters.HEIGHT // 2 + 50)
             Parameters.screen.blit(score, scoreRect)
 
         textRect = text.get_rect()
