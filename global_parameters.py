@@ -1,7 +1,5 @@
 import os
 import pygame
-import random
-
 
 class Parameters:
 
@@ -56,4 +54,3 @@ class Parameters:
 
     ifdead = False
     point = 0
-    isRunnung = False
