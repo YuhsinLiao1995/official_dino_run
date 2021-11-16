@@ -8,9 +8,10 @@ from global_parameters import Parameters
 import pygame
 # from start_run_def import startRun
 
-# pygame.init()
+pygame.init()
 
-def menu(ifdead):
+def menu(ifdead, startRun):
+    print("ifdead", ifdead)
     # run = True
     Parameters.isRunnung = True
     print("Parameters.isRunnungedwf", Parameters.isRunnung)
@@ -18,6 +19,7 @@ def menu(ifdead):
     # while run:
     while Parameters.isRunnung:
         Parameters.screen.fill(Parameters.WHITE)
+        # print("while Parameters.isRunnung")
 
         font = pygame.font.Font("freesansbold.ttf", 30)
 
@@ -30,13 +32,17 @@ def menu(ifdead):
             scoreRect = score.get_rect()
             scoreRect.center = (Parameters.WIDTH // 2, Parameters.HEIGHT // 2 + 50)
             Parameters.screen.blit(score, scoreRect)
+            # Parameters.isRunnung = False
 
         textRect = text.get_rect()
         textRect.center = (Parameters.WIDTH//2, Parameters.HEIGHT // 2)
         Parameters.screen.blit(text, textRect)
         pygame.display.update()
 
+
         for event in pygame.event.get():
+            # print("for event in pygame.event.get():")
+            # print("event.type", event.type)
             if event.type == pygame.QUIT:
                 # run = False
                 Parameters.isRunnung = False
@@ -46,6 +52,10 @@ def menu(ifdead):
                 exit()
             if event.type == pygame.KEYDOWN:
                 # startRun()
+                print("# startRun()")
                 Parameters.isRunnung = True
-
-return Parameters.isRunnung
+                print("return")
+                startRun()
+                return Parameters.isRunnung
+    # print("return")
+    # return Parameters.isRunnung

@@ -172,14 +172,28 @@ pygame.init()
 #                 startRun()
 
 # calling the game
+# if Parameters.isRunnung is True:
+#     print("run!")
+#     startRun()
 
-print("Parameters.isRunnungedwf", Parameters.isRunnung)
-menu(Parameters.ifdead)
+# if Parameters.ifdead is True:
+#     menu(Parameters.ifdead)
+# print("Parameters.isRunnungedwf", Parameters.isRunnung)
+# menu(Parameters.ifdead)
 
-print("Parameters.isRunnung", Parameters.isRunnung)
 
+# print("test", test)
+
+# print("Parameters.isRunnung", Parameters.isRunnung)
+
+# if Parameters.ifdead is True:
+#     print("dead")
+#     menu(Parameters.ifdead)
+
+menu(Parameters.ifdead, startRun)
+# if Parameters.isRunnung is True:
+#     print("run!")
+#     startRun()
+# # main()
 if Parameters.ifdead is True:
-    menu(Parameters.ifdead)
-if Parameters.isRunnung is True:
-    startRun()
-# main()
+    menu(Parameters.ifdead, startRun)

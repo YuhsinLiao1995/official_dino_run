@@ -125,6 +125,7 @@ def startRun():
 
                 pygame.time.delay(2000)
                 Parameters.ifdead = True
+                return Parameters.ifdead
                 # menu(Parameters.ifdead)
 
         # drawing the clouds
