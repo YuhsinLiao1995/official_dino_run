@@ -1,9 +1,9 @@
+import os
 import pygame
 import random
-import os
 
 
-class Constants:
+class Parameters:
 
     # Defining the constants
     WINDOW_SIZE = (WIDTH, HEIGHT) = (1000, 500)
@@ -43,6 +43,17 @@ class Constants:
         pygame.image.load(os.path.join(IMAGE_PATH, "3. Obstacles/Bird2.png"))
     ]
 
+    # screen and background settings
+    bg_img = pygame.image.load(
+        "img/1.Background/track_bis.png")  # load the track image
+    bg_size = (bg_width, bg_height) = (bg_img.get_width(),
+                                       bg_img.get_height())
+    # getting the track image size
+
+    # implementing the logo and caption of the game
+    logo = pygame.image.load(os.path.join(IMAGE_PATH, "1.Background/Logo.png"))
+
 
     ifdead = False
     point = 0
+    isRunnung = False
