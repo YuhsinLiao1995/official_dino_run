@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 import os
 
-IMAGE_PATH = "img/"
+IMAGE_PATH = "official_dino_run/img/"
 
 class Dino:
   #dino constants
@@ -12,13 +12,14 @@ class Dino:
   jump_vel = 10
 
   #dino images
-  RUNNING = [pygame.image.load(os.path.join(IMAGE_PATH, "2. Dino/DinoRun1.png")),
-             pygame.image.load(os.path.join(IMAGE_PATH, "2. Dino/DinoRun2.png"))]
+  RUNNING = [pygame.image.load("/Users/clarabesnard/Desktop/OneDrive - CentraleSupelec/M1 2021 - 2022/Centrale/4. Python/Project/2. Chrome_dino_project/1. Code/official_dino_run/img/2. Dino/DinoRun1.png"),
+             pygame.image.load("/Users/clarabesnard/Desktop/OneDrive - CentraleSupelec/M1 2021 - 2022/Centrale/4. Python/Project/2. Chrome_dino_project/1. Code/official_dino_run/img/2. Dino/DinoRun2.png")]
 
-  DUCKING = [pygame.image.load(os.path.join(IMAGE_PATH, "2. Dino/DinoDuck1.png")),
-             pygame.image.load(os.path.join(IMAGE_PATH, "2. Dino/DinoDuck2.png"))]
+  DUCKING = [pygame.image.load("/Users/clarabesnard/Desktop/OneDrive - CentraleSupelec/M1 2021 - 2022/Centrale/4. Python/Project/2. Chrome_dino_project/1. Code/official_dino_run/img/2. Dino/DinoDuck1.png"),
+             pygame.image.load("/Users/clarabesnard/Desktop/OneDrive - CentraleSupelec/M1 2021 - 2022/Centrale/4. Python/Project/2. Chrome_dino_project/1. Code/official_dino_run/img/2. Dino/DinoDuck2.png")]
 
-  JUMPING = pygame.image.load(os.path.join(IMAGE_PATH, "2. Dino/DinoJump.png"))
+  JUMPING = pygame.image.load(
+      "/Users/clarabesnard/Desktop/OneDrive - CentraleSupelec/M1 2021 - 2022/Centrale/4. Python/Project/2. Chrome_dino_project/1. Code/official_dino_run/img/2. Dino/DinoJump.png")
 
   #initializing our dino
   def __init__(self):
