@@ -13,6 +13,7 @@ import pygame
 def menu(ifdead):
     # run = True
     Parameters.isRunnung = True
+    print("Parameters.isRunnungedwf", Parameters.isRunnung)
     Parameters.screen = pygame.display.set_mode((Parameters.WIDTH, Parameters.HEIGHT))
     # while run:
     while Parameters.isRunnung:
@@ -47,3 +48,4 @@ def menu(ifdead):
                 # startRun()
                 Parameters.isRunnung = True
 
+return Parameters.isRunnung
