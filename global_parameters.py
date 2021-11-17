@@ -51,6 +51,7 @@ class Parameters:
     # implementing the logo and caption of the game
     logo = pygame.image.load(os.path.join(IMAGE_PATH, "1.Background/Logo.png"))
 
-
-    ifdead = False
+    isDead = False
     point = 0
+    isRunnung = False
+    firstTime = True
