@@ -10,14 +10,14 @@ def menu():
     while Parameters.isRunnung:
         Parameters.screen.fill(Parameters.WHITE)
 
-        font = pygame.font.Font("freesansbold.ttf", 30)
+        font = pygame.font.Font("game_over.ttf", 90)
 
         if Parameters.isDead is False:
-            text = font.render("Press any Key to Start", True, (0, 0, 0))
+            text = font.render("Press any Key to Start", True, Parameters.FONT_COLOR)
 
         elif Parameters.isDead is True:
-            text = font.render("Press any Key to Restart", True, (0, 0, 0))
-            score = font.render("Your Score: " + str(Parameters.point), True, (0, 0, 0))
+            text = font.render("Press any Key to Restart", True, Parameters.FONT_COLOR)
+            score = font.render("Your Score: " + str(Parameters.point), True, Parameters.FONT_COLOR)
             scoreRect = score.get_rect()
             scoreRect.center = (Parameters.WIDTH // 2, Parameters.HEIGHT // 2 + 50)
             Parameters.screen.blit(score, scoreRect)

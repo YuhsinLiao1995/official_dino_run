@@ -38,7 +38,7 @@ def startRun():
     # making the game run
     global run
     run = True
-    speedgame = 10  # speed at which the background will move
+    speedgame = 8  # speed at which the background will move
 
     # managing obstacles
     obstacles = []
@@ -116,7 +116,7 @@ def startRun():
 
             if player.dino_rect.colliderect(obstacle.rect):
 
-                pygame.time.delay(2000)
+                #pygame.time.delay(2000)
                 Parameters.isDead = True
                 return Parameters.isDead
                 # menu(Parameters.ifdead)
