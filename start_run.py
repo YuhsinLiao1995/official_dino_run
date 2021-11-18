@@ -38,7 +38,7 @@ def startRun():
     # making the game run
     global run
     run = True
-    speedgame = 10  # speed at which the background will move
+    speedgame = 15  # speed at which the background will move
 
     # managing obstacles
     obstacles = []
@@ -98,6 +98,10 @@ def startRun():
         # recording the commands from the player
         user_input = pygame.key.get_pressed()
 
+        # drawing the clouds
+        cloud.draw(Parameters.screen)
+        cloud.update(speedgame, Parameters.WIDTH)
+
         # calling the player:
         player.draw(Parameters.screen)
         player.update(user_input)
@@ -125,9 +129,7 @@ def startRun():
                 return Parameters.isDead
                 # menu(Parameters.ifdead)
 
-        # drawing the clouds
-        cloud.draw(Parameters.screen)
-        cloud.update(speedgame, Parameters.WIDTH)
+
 
         score()  # we put at the end so it does not flash
 
