@@ -11,16 +11,25 @@ def menu():
         Parameters.screen.fill(Parameters.WHITE)
 
         font = pygame.font.Font("game_over.ttf", 90)
+        fontTitle = pygame.font.Font("game_over.ttf", 110)
 
         if Parameters.isDead is False:
             text = font.render("Press any Key to Start", True, Parameters.FONT_COLOR)
 
         elif Parameters.isDead is True:
+
+            textTitle = fontTitle.render(
+                "Game Over YOU   LOSER!", True, Parameters.FONT_COLOR)
+            textTitleRect = textTitle.get_rect()
+            textTitleRect.center = (Parameters.WIDTH//2, Parameters.HEIGHT // 2 - 50)
+
             text = font.render("Press any Key to Restart", True, Parameters.FONT_COLOR)
             score = font.render("Your Score: " + str(Parameters.point), True, Parameters.FONT_COLOR)
             scoreRect = score.get_rect()
-            scoreRect.center = (Parameters.WIDTH // 2, Parameters.HEIGHT // 2 + 50)
+            scoreRect.center = (Parameters.WIDTH // 2,Parameters.HEIGHT // 2 + 80)
+
             Parameters.screen.blit(score, scoreRect)
+            Parameters.screen.blit(textTitle, textTitleRect)
 
         textRect = text.get_rect()
         textRect.center = (Parameters.WIDTH//2, Parameters.HEIGHT // 2)
