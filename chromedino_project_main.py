@@ -1,11 +1,9 @@
 import pygame
-from classes.Dino import Dino
-from classes.Cloud import Cloud
-from classes.Obstacles import LargeCactus, SmallCactus, Bird
-from pygame.locals import *
-import random
-import os
+from global_parameters import Parameters
+from menu import menu
+from start_run import startRun
 
+pygame.init()
 
 #Defining the constants
 WINDOW_SIZE = (WIDTH, HEIGHT) = (1000, 500)
@@ -172,9 +170,19 @@ def main():
 
     pygame.display.update()
 
+# calling the game
+menu()
 
-main()
+if Parameters.isRunnung is True:
+    startRun()
+
+# when the dino is dead, call menu function to display restart menu
+if Parameters.isDead is True:
+    menu()
 
 
-
-
+# restart the game
+while Parameters.firstTime is False :
+    startRun()
+    if Parameters.isDead is True:
+        menu()
