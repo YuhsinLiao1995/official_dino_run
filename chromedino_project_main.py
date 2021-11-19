@@ -139,7 +139,7 @@ def main():
       x_pos = 0
 
     x_pos -= speedgame
-    print(x_pos)
+
 
 
     #recording the commands from the player
