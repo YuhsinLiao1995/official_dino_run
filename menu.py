@@ -5,7 +5,7 @@ from global_parameters import Parameters
 pygame.font.init()
 font = pygame.font.Font("freesansbold.ttf", 30)
 fontTitle = pygame.font.Font("freesansbold.ttf", 50)
-fontButton = pygame.font.SysFont("Arial", 25)
+fontButton = pygame.font.SysFont("Arial", 23)
 
 def button(i, x, y, w, h, img, title):
     pygame.font.init()
@@ -60,11 +60,11 @@ def menu():
             Parameters.screen.blit(score, scoreRect)
 
         button(1, Parameters.WIDTH/2 - 200, 290, 50, 50,
-               pygame.image.load("img/4. ThemeButton/themeDino.png"), "dino")
+               pygame.image.load("img/4. ThemeButton/themeDino.png"), "Dino")
         button(2, Parameters.WIDTH/2 - 50, 290, 50, 50,
-               pygame.image.load("img/4. ThemeButton/themeJoker.png"), "mario")
+               pygame.image.load("img/4. ThemeButton/themePicachu.jpeg"), "Picachu")
         button(3, Parameters.WIDTH/2 + 100, 290, 50, 50,
-               pygame.image.load("img/4. ThemeButton/themeMario.jpeg"), "joker")
+               pygame.image.load("img/4. ThemeButton/themeMario.jpeg"), "Mario")
 
         pygame.display.update()
 
