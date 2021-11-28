@@ -19,13 +19,19 @@ def startRun():
     pygame.display.set_icon(Parameters.logo)
     pygame.display.set_caption("Chrome Dino Runner")
 
+
+
     def score():
-        global  speedgame
+        global speedgame
         Parameters.point += 1
         font = pygame.font.Font("game_over.ttf", 70)
+
+        #displaying the score
         text = font.render("Point: " + str(Parameters.point), True, Parameters.FONT_COLOR)
         textRect = text.get_rect()
-        textRect.center = (Parameters.WIDTH - 150, Parameters.HEIGHT // 4.5)
+        (textRectx, textRecty) = (Parameters.WIDTH - 150, Parameters.HEIGHT // 4.5)
+        textRect.center = (textRectx, textRecty)
+
         Parameters.screen.blit(text, textRect)
         pygame.display.update()
 
@@ -38,7 +44,7 @@ def startRun():
     # making the game run
     global run
     run = True
-    speedgame = 15  # speed at which the background will move
+    speedgame = 10  # speed at which the background will move
 
     # managing obstacles
     obstacles = []
@@ -93,7 +99,7 @@ def startRun():
             x_pos = 0
 
         x_pos -= speedgame
-        print(x_pos)
+        #print(x_pos)
 
         # recording the commands from the player
         user_input = pygame.key.get_pressed()

@@ -23,6 +23,8 @@ def menu():
             textTitleRect = textTitle.get_rect()
             textTitleRect.center = (Parameters.WIDTH//2, Parameters.HEIGHT // 2 - 50)
 
+            Parameters.scores.append(Parameters.point) #we add the score to listing of scores
+            #print(Parameters.scores)
             text = font.render("Press any Key to Restart", True, Parameters.FONT_COLOR)
             score = font.render("Your Score: " + str(Parameters.point), True, Parameters.FONT_COLOR)
             scoreRect = score.get_rect()
