@@ -55,3 +55,4 @@ class Parameters:
     point = 0
     isRunnung = False
     firstTime = True
+    themeOption = 0
