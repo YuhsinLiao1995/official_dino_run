@@ -8,6 +8,7 @@ from global_parameters import Parameters
 import datetime
 
 
+
 def startRun():
     global speedgame, obstacles, points
     # all variables
@@ -28,6 +29,7 @@ def startRun():
     obstacles = []
 
     def score():
+<<<<<<< HEAD
         global  speedgame, points
         points += 1
         # making gamespeed goes faster based on points accumulation
@@ -36,6 +38,13 @@ def startRun():
 
         font = pygame.font.Font("game_over.ttf", 70)
         text = font.render("Point: " + str(points), True, Parameters.FONT_COLOR)
+=======
+        global speedgame
+        Parameters.point += 1
+        font = pygame.font.Font("game_over.ttf", 70)
+        text = font.render("Point: " + str(Parameters.point),
+                           True, Parameters.FONT_COLOR)
+>>>>>>> 757069d6e393d5bd5b8ef25bea31dd735dea6915
         textRect = text.get_rect()
         textRect.center = (Parameters.WIDTH - 150, Parameters.HEIGHT // 4.5)
         Parameters.screen.blit(text, textRect)
@@ -45,7 +54,8 @@ def startRun():
     img_coordinates = (x_pos, y_pos) = (
         0, Parameters.HEIGHT - 5*Parameters.bg_height)  # coordinates of the background
     Parameters.screen.blit(Parameters.bg_img, (x_pos, y_pos))
-    Parameters.screen.blit(Parameters.bg_img, (x_pos + Parameters.bg_width, y_pos))
+    Parameters.screen.blit(
+        Parameters.bg_img, (x_pos + Parameters.bg_width, y_pos))
 
 
     # managing pause and unpause
@@ -69,7 +79,9 @@ def startRun():
                     run = True
                     pause = False
 
+    clock = pygame.time.Clock()
     while run:
+        clock.tick(100)
 
         # we make the run possible to quit:
         for event in pygame.event.get():
@@ -87,15 +99,26 @@ def startRun():
         # we make the image appear one time
         Parameters.screen.blit(Parameters.bg_img, (x_pos, y_pos))
         # we make the image appear a second time
-        Parameters.screen.blit(Parameters.bg_img, (Parameters.bg_width + x_pos, y_pos))
+        Parameters.screen.blit(
+            Parameters.bg_img, (Parameters.bg_width + x_pos, y_pos))
 
         if x_pos <= -Parameters.bg_width:
-            Parameters.screen.blit(Parameters.bg_img, (Parameters.bg_width + x_pos, y_pos))
+            Parameters.screen.blit(
+                Parameters.bg_img, (Parameters.bg_width + x_pos, y_pos))
             x_pos = 0
 
         x_pos -= speedgame
+<<<<<<< HEAD
+=======
+        # print(x_pos)
+
+>>>>>>> 757069d6e393d5bd5b8ef25bea31dd735dea6915
         # recording the commands from the player
         user_input = pygame.key.get_pressed()
+
+        # drawing the clouds
+        cloud.draw(Parameters.screen)
+        cloud.update(speedgame, Parameters.WIDTH)
 
         # calling the player:
         player.draw(Parameters.screen)
@@ -124,6 +147,7 @@ def startRun():
                 return Parameters.isDead
                 # menu(Parameters.ifdead)
 
+<<<<<<< HEAD
             # if player.dino_rect.colliderect(obstacle.rect):
             #     pygame.time.delay(2000)
             #     death_count += 1
@@ -133,6 +157,8 @@ def startRun():
         cloud.draw(Parameters.screen)
         cloud.update(speedgame, Parameters.WIDTH)
 
+=======
+>>>>>>> 757069d6e393d5bd5b8ef25bea31dd735dea6915
         score()  # we put at the end so it does not flash
 
         pygame.display.update()
