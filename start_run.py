@@ -14,7 +14,7 @@ def startRun():
     # all variables
     Parameters.point = 0
     Parameters.isDead = False
-    player = Dino()
+    player = Dino(Parameters.themeOption)
     cloud = Cloud(Parameters.WIDTH)
 
     pygame.display.set_icon(Parameters.logo)
@@ -36,12 +36,20 @@ def startRun():
         Parameters.screen.blit(text, textRect)
         pygame.display.update()
 
+    #we load the correct background
+    options = ["Dino", "Pika", "Mario"]
+    path = "img/1.Background/" + options[Parameters.themeOption - 1] + ".png"
+    bg_img = pygame.image.load(path)
+    bg_size = (bg_width, bg_height) = (bg_img.get_width(),
+                                       bg_img.get_height())
+
     # displaying the background
-    img_coordinates = (x_pos, y_pos) = (
-        0, Parameters.HEIGHT - 5*Parameters.bg_height)  # coordinates of the background
-    Parameters.screen.blit(Parameters.bg_img, (x_pos, y_pos))
+    #img_coordinates = (x_pos, y_pos) = (
+        #0, Parameters.HEIGHT - 5*Parameters.bg_height)  # coordinates of the background
+    img_coordinates = (x_pos, y_pos) = (0, 0)
+    Parameters.screen.blit(bg_img, (x_pos, y_pos))
     Parameters.screen.blit(
-        Parameters.bg_img, (x_pos + Parameters.bg_width, y_pos))
+        bg_img, (x_pos + bg_width, y_pos))
 
     # making the game run
     global run
@@ -91,14 +99,14 @@ def startRun():
         # we color the rest of the background in white
         Parameters.screen.fill(Parameters.WHITE)
         # we make the image appear one time
-        Parameters.screen.blit(Parameters.bg_img, (x_pos, y_pos))
+        Parameters.screen.blit(bg_img, (x_pos, y_pos))
         # we make the image appear a second time
         Parameters.screen.blit(
-            Parameters.bg_img, (Parameters.bg_width + x_pos, y_pos))
+            bg_img, (bg_width + x_pos, y_pos))
 
-        if x_pos <= -Parameters.bg_width:
+        if x_pos <= -bg_width:
             Parameters.screen.blit(
-                Parameters.bg_img, (Parameters.bg_width + x_pos, y_pos))
+                bg_img, (bg_width + x_pos, y_pos))
             x_pos = 0
 
         x_pos -= speedgame
@@ -120,12 +128,13 @@ def startRun():
         if len(obstacles) == 0:
             if random.randint(0, 1) == 0:
                 obstacles.append(LargeCactus(
-                    Parameters.LARGE_CACTUS, Parameters.WIDTH))
+                    Parameters.WIDTH, Parameters.themeOption))
             elif random.randint(0, 2) == 1:
+                #print("small obs")
                 obstacles.append(SmallCactus(
-                    Parameters.SMALL_CACTUS, Parameters.WIDTH))
+                    Parameters.WIDTH, Parameters.themeOption))
             else:
-                obstacles.append(Bird(Parameters.BIRD, Parameters.WIDTH))
+                obstacles.append(Bird(Parameters.WIDTH, Parameters.themeOption))
 
         for obstacle in obstacles:
             obstacle.draw(Parameters.screen)
