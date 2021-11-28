@@ -5,13 +5,13 @@ from classes.Cloud import Cloud
 from classes.Obstacles import LargeCactus, SmallCactus, Bird
 import os
 from global_parameters import Parameters
+import datetime
 
-run = False
 
 def startRun():
-    global speedgame, obstacles
+    global speedgame, obstacles, points
     # all variables
-    Parameters.point = 0
+    points = 0
     Parameters.isDead = False
     player = Dino()
     cloud = Cloud(Parameters.WIDTH)
@@ -19,11 +19,23 @@ def startRun():
     pygame.display.set_icon(Parameters.logo)
     pygame.display.set_caption("Chrome Dino Runner")
 
+    # making the game run
+    global run
+    run = True
+    speedgame = 10  # speed at which the background will move
+
+    # managing obstacles
+    obstacles = []
+
     def score():
-        global  speedgame
-        Parameters.point += 1
+        global  speedgame, points
+        points += 1
+        # making gamespeed goes faster based on points accumulation
+        if points % 100 == 0:
+            speedgame += 1
+
         font = pygame.font.Font("game_over.ttf", 70)
-        text = font.render("Point: " + str(Parameters.point), True, Parameters.FONT_COLOR)
+        text = font.render("Point: " + str(points), True, Parameters.FONT_COLOR)
         textRect = text.get_rect()
         textRect.center = (Parameters.WIDTH - 150, Parameters.HEIGHT // 4.5)
         Parameters.screen.blit(text, textRect)
@@ -35,13 +47,6 @@ def startRun():
     Parameters.screen.blit(Parameters.bg_img, (x_pos, y_pos))
     Parameters.screen.blit(Parameters.bg_img, (x_pos + Parameters.bg_width, y_pos))
 
-    # making the game run
-    global run
-    run = True
-    speedgame = 10  # speed at which the background will move
-
-    # managing obstacles
-    obstacles = []
 
     # managing pause and unpause
     def paused():
@@ -89,8 +94,6 @@ def startRun():
             x_pos = 0
 
         x_pos -= speedgame
-        print(x_pos)
-
         # recording the commands from the player
         user_input = pygame.key.get_pressed()
 
@@ -120,6 +123,11 @@ def startRun():
                 Parameters.isDead = True
                 return Parameters.isDead
                 # menu(Parameters.ifdead)
+
+            # if player.dino_rect.colliderect(obstacle.rect):
+            #     pygame.time.delay(2000)
+            #     death_count += 1
+            #     menu(death_count)
 
         # drawing the clouds
         cloud.draw(Parameters.screen)
