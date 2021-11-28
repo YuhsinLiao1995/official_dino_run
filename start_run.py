@@ -8,6 +8,7 @@ from global_parameters import Parameters
 
 run = False
 
+
 def startRun():
     global speedgame, obstacles
     # all variables
@@ -26,8 +27,8 @@ def startRun():
         Parameters.point += 1
         font = pygame.font.Font("game_over.ttf", 70)
 
-        #displaying the score
-        text = font.render("Point: " + str(Parameters.point), True, Parameters.FONT_COLOR)
+        text = font.render("Point: " + str(Parameters.point),
+                           True, Parameters.FONT_COLOR)
         textRect = text.get_rect()
         (textRectx, textRecty) = (Parameters.WIDTH - 150, Parameters.HEIGHT // 4.5)
         textRect.center = (textRectx, textRecty)
@@ -39,7 +40,8 @@ def startRun():
     img_coordinates = (x_pos, y_pos) = (
         0, Parameters.HEIGHT - 5*Parameters.bg_height)  # coordinates of the background
     Parameters.screen.blit(Parameters.bg_img, (x_pos, y_pos))
-    Parameters.screen.blit(Parameters.bg_img, (x_pos + Parameters.bg_width, y_pos))
+    Parameters.screen.blit(
+        Parameters.bg_img, (x_pos + Parameters.bg_width, y_pos))
 
     # making the game run
     global run
@@ -71,7 +73,6 @@ def startRun():
                     pause = False
 
     clock = pygame.time.Clock()
-
     while run:
 
         clock.tick(120)
@@ -92,14 +93,16 @@ def startRun():
         # we make the image appear one time
         Parameters.screen.blit(Parameters.bg_img, (x_pos, y_pos))
         # we make the image appear a second time
-        Parameters.screen.blit(Parameters.bg_img, (Parameters.bg_width + x_pos, y_pos))
+        Parameters.screen.blit(
+            Parameters.bg_img, (Parameters.bg_width + x_pos, y_pos))
 
         if x_pos <= -Parameters.bg_width:
-            Parameters.screen.blit(Parameters.bg_img, (Parameters.bg_width + x_pos, y_pos))
+            Parameters.screen.blit(
+                Parameters.bg_img, (Parameters.bg_width + x_pos, y_pos))
             x_pos = 0
 
         x_pos -= speedgame
-        #print(x_pos)
+        # print(x_pos)
 
         # recording the commands from the player
         user_input = pygame.key.get_pressed()
@@ -134,8 +137,6 @@ def startRun():
                 Parameters.isDead = True
                 return Parameters.isDead
                 # menu(Parameters.ifdead)
-
-
 
         score()  # we put at the end so it does not flash
 
