@@ -7,7 +7,6 @@ class Parameters:
     WINDOW_SIZE = (WIDTH, HEIGHT) = (1000, 500)
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
-
     # colors variables
     BLACK = (0, 0, 0)
     WHITE = (247, 247, 247)
@@ -42,10 +41,10 @@ class Parameters:
     ]
 
     # screen and background settings
-    bg_img = pygame.image.load(
-        "img/1.Background/track_bis.png")  # load the track image
-    bg_size = (bg_width, bg_height) = (bg_img.get_width(),
-                                       bg_img.get_height())
+    #bg_img = pygame.image.load("img/1.Background/DinoTrack.png")  # load the track image
+    #bg_size = (bg_width, bg_height) = (bg_img.get_width(),
+                                       #bg_img.get_height())
+    #print(bg_size)
     # getting the track image size
 
     # implementing the logo and caption of the game
@@ -55,3 +54,7 @@ class Parameters:
     point = 0
     isRunnung = False
     firstTime = True
+    themeOption = 0
+
+
+
