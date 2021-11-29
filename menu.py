@@ -61,6 +61,15 @@ def menu():
             Parameters.screen.blit(score, scoreRect)
             #Parameters.screen.blit(textTitle, textTitleRect)
 
+
+            #pointmax = max(Parameters.point)
+            scoreint = [int(x) for x in score.split()]
+            pointmax = max(scoreint)
+            hs_score = font.render("High Score:" + str(Parameters.pointmax), True, (0,0,0))
+            hs_scoreRect = hs_score.get_rect()
+            hs_scoreRect.center = (Parameters.WIDTH// 2, Parameters.HEIGHT // 2 - 50)
+            Parameters.screen.blit(hs_score, hs_scoreRect) 
+
         button(1, Parameters.WIDTH/2 - 200, 290, 50, 50,
                pygame.image.load("img/4. ThemeButton/themeDino.png"), "Dino")
         button(2, Parameters.WIDTH/2 - 50, 290, 50, 50,
