@@ -35,6 +35,8 @@ def startRun():
 
         Parameters.screen.blit(text, textRect)
         pygame.display.update()
+        if Parameters.point % 100 == 0:
+          speedgame += 1 #make the game go faster
 
     #we load the correct background
     options = ["Dino", "Pika", "Mario"]
@@ -54,7 +56,8 @@ def startRun():
     # making the game run
     global run
     run = True
-    speedgame = 10  # speed at which the background will move
+    speedgame = 15  # speed at which the background will move
+    print(speedgame)
 
     # managing obstacles
     obstacles = []
