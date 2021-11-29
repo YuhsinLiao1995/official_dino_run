@@ -20,6 +20,7 @@ def button(i, x, y, w, h, img, title):
     if x + w > mouse[0] > x and y + h > mouse[1] > y:
         if click[0] == 1:
             Parameters.themeOption = i
+            print(Parameters.themeOption)
 
 def menu():
     run = True
@@ -58,6 +59,7 @@ def menu():
             scoreRect = score.get_rect()
             scoreRect.center = (Parameters.WIDTH // 2, Parameters.HEIGHT // 2 - 60)
             Parameters.screen.blit(score, scoreRect)
+            #Parameters.screen.blit(textTitle, textTitleRect)
 
         button(1, Parameters.WIDTH/2 - 200, 290, 50, 50,
                pygame.image.load("img/4. ThemeButton/themeDino.png"), "Dino")
@@ -71,7 +73,6 @@ def menu():
         for event in pygame.event.get():
 
             if Parameters.firstTime is True:
-
 
                 if event.type == pygame.QUIT:
                     Parameters.isRunnung = False

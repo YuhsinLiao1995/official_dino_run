@@ -10,23 +10,27 @@ class Dino:
     y_dino = 290
     y_dino_duck = 320
     jump_vel = 10
+    option = 0
 
     #dino images
 
-    RUNNING = [pygame.image.load(os.path.join(IMAGE_PATH, "2. Dino/DinoRun1.png")),
-                 pygame.image.load(os.path.join(IMAGE_PATH, "2. Dino/DinoRun2.png"))]
-
-    DUCKING = [pygame.image.load(os.path.join(IMAGE_PATH, "2. Dino/DinoDuck1.png")),
-                 pygame.image.load(os.path.join(IMAGE_PATH, "2. Dino/DinoDuck2.png"))]
-
-    JUMPING = pygame.image.load(os.path.join(IMAGE_PATH, "2. Dino/DinoJump.png"))
-
     #initializing our dino
-    def __init__(self):
+    def __init__(self, option):
         #regarding the image of the dino
-        self.running_image = self.RUNNING
-        self.jumping_image = self.JUMPING
-        self.ducking_image = self.DUCKING
+        self.option = option
+        #select correct folder
+        options = ["Dino", "Pika", "Mario"]
+        img_path= "img/2. Dino/" + options[option - 1]
+        #print(img_path+"/Run1.png")
+        self.running_image = [pygame.image.load(img_path+"/Run1.png"),
+                              pygame.image.load(img_path+"/Run2.png"),
+                              pygame.image.load(img_path+"/Run3.png"),
+                              pygame.image.load(img_path+"/Run4.png")]
+        self.jumping_image = pygame.image.load(img_path+"/Jump.png")
+        self.ducking_image = [pygame.image.load(img_path+"/Duck1.png"),
+                              pygame.image.load(img_path+"/Duck2.png"),
+                              pygame.image.load(img_path+"/Duck3.png"),
+                              pygame.image.load(img_path+"/Duck4.png")]
         self.image = self.running_image[0]  # first image of the dino
 
         #regarding the position of the dino
@@ -46,21 +50,24 @@ class Dino:
     #running function
     def run(self):
         # vary from image 1 and image 2
-        self.image = self.running_image[self.run_count // 10]
+        self.image = self.running_image[self.run_count // 5]
         self.dino_rect.x = self.x_dino
         self.dino_rect.y = self.y_dino
         self.run_count += 1
 
     #ducking function
     def duck(self):
-        self.image = self.ducking_image[self.run_count // 10]
+        self.image = self.ducking_image[self.run_count // 5]
         self.dino_rect.x = self.x_dino
         self.dino_rect.y = self.y_dino_duck
         self.run_count += 1
 
     #jumping function
     def jump(self):
-        self.image = self.JUMPING  # replace the running image witht the jumping image
+        # replace the running image witht the jumping image
+        options = ["Dino", "Pika", "Mario"]
+        img_path = "img/2. Dino/" + options[self.option - 1]
+        self.image = pygame.image.load(img_path+"/Jump.png")
         #print("START", self.y_dino)
         if self.is_jumping:
             self.dino_rect.y -= (self.vel * abs(self.vel)) * 0.25  # make the dino move on the y axis

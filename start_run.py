@@ -14,34 +14,50 @@ def startRun():
     # all variables
     Parameters.point = 0
     Parameters.isDead = False
-    player = Dino()
+    player = Dino(Parameters.themeOption)
     cloud = Cloud(Parameters.WIDTH)
 
     pygame.display.set_icon(Parameters.logo)
     pygame.display.set_caption("Chrome Dino Runner")
 
+
+
     def score():
         global speedgame
         Parameters.point += 1
         font = pygame.font.Font("game_over.ttf", 70)
+
         text = font.render("Point: " + str(Parameters.point),
                            True, Parameters.FONT_COLOR)
         textRect = text.get_rect()
-        textRect.center = (Parameters.WIDTH - 150, Parameters.HEIGHT // 4.5)
+        (textRectx, textRecty) = (Parameters.WIDTH - 150, Parameters.HEIGHT // 4.5)
+        textRect.center = (textRectx, textRecty)
+
         Parameters.screen.blit(text, textRect)
         pygame.display.update()
+        if Parameters.point % 100 == 0:
+          speedgame += 1 #make the game go faster
+
+    #we load the correct background
+    options = ["Dino", "Pika", "Mario"]
+    path = "img/1.Background/" + options[Parameters.themeOption - 1] + ".png"
+    bg_img = pygame.image.load(path)
+    bg_size = (bg_width, bg_height) = (bg_img.get_width(),
+                                       bg_img.get_height())
 
     # displaying the background
-    img_coordinates = (x_pos, y_pos) = (
-        0, Parameters.HEIGHT - 5*Parameters.bg_height)  # coordinates of the background
-    Parameters.screen.blit(Parameters.bg_img, (x_pos, y_pos))
+    #img_coordinates = (x_pos, y_pos) = (
+        #0, Parameters.HEIGHT - 5*Parameters.bg_height)  # coordinates of the background
+    img_coordinates = (x_pos, y_pos) = (0, 0)
+    Parameters.screen.blit(bg_img, (x_pos, y_pos))
     Parameters.screen.blit(
-        Parameters.bg_img, (x_pos + Parameters.bg_width, y_pos))
+        bg_img, (x_pos + bg_width, y_pos))
 
     # making the game run
     global run
     run = True
-    speedgame = 10  # speed at which the background will move
+    speedgame = 15  # speed at which the background will move
+    print(speedgame)
 
     # managing obstacles
     obstacles = []
@@ -69,7 +85,8 @@ def startRun():
 
     clock = pygame.time.Clock()
     while run:
-        clock.tick(100)
+
+        clock.tick(120)
 
         # we make the run possible to quit:
         for event in pygame.event.get():
@@ -85,14 +102,14 @@ def startRun():
         # we color the rest of the background in white
         Parameters.screen.fill(Parameters.WHITE)
         # we make the image appear one time
-        Parameters.screen.blit(Parameters.bg_img, (x_pos, y_pos))
+        Parameters.screen.blit(bg_img, (x_pos, y_pos))
         # we make the image appear a second time
         Parameters.screen.blit(
-            Parameters.bg_img, (Parameters.bg_width + x_pos, y_pos))
+            bg_img, (bg_width + x_pos, y_pos))
 
-        if x_pos <= -Parameters.bg_width:
+        if x_pos <= -bg_width:
             Parameters.screen.blit(
-                Parameters.bg_img, (Parameters.bg_width + x_pos, y_pos))
+                bg_img, (bg_width + x_pos, y_pos))
             x_pos = 0
 
         x_pos -= speedgame
@@ -114,12 +131,13 @@ def startRun():
         if len(obstacles) == 0:
             if random.randint(0, 1) == 0:
                 obstacles.append(LargeCactus(
-                    Parameters.LARGE_CACTUS, Parameters.WIDTH))
+                    Parameters.WIDTH, Parameters.themeOption))
             elif random.randint(0, 2) == 1:
+                #print("small obs")
                 obstacles.append(SmallCactus(
-                    Parameters.SMALL_CACTUS, Parameters.WIDTH))
+                    Parameters.WIDTH, Parameters.themeOption))
             else:
-                obstacles.append(Bird(Parameters.BIRD, Parameters.WIDTH))
+                obstacles.append(Bird(Parameters.WIDTH, Parameters.themeOption))
 
         for obstacle in obstacles:
             obstacle.draw(Parameters.screen)
@@ -127,7 +145,7 @@ def startRun():
 
             if player.dino_rect.colliderect(obstacle.rect):
 
-                pygame.time.delay(2000)
+                #pygame.time.delay(2000)
                 Parameters.isDead = True
                 return Parameters.isDead
                 # menu(Parameters.ifdead)
