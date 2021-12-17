@@ -7,6 +7,7 @@ import os
 from global_parameters import Parameters
 
 run = False
+speedgame = 15  # speed at which the background will move
 
 
 def startRun():
@@ -19,8 +20,6 @@ def startRun():
 
     pygame.display.set_icon(Parameters.logo)
     pygame.display.set_caption("Chrome Dino Runner")
-
-
 
     def score():
         global speedgame
@@ -36,7 +35,9 @@ def startRun():
         Parameters.screen.blit(text, textRect)
         pygame.display.update()
         if Parameters.point % 100 == 0:
-          speedgame += 1 #make the game go faster
+
+          #make the game go faster
+          speedgame += 1
 
     #we load the correct background
     options = ["Dino", "Pika", "Mario"]
@@ -56,8 +57,7 @@ def startRun():
     # making the game run
     global run
     run = True
-    speedgame = 15  # speed at which the background will move
-    print(speedgame)
+    # speedgame = 15  # speed at which the background will move
 
     # managing obstacles
     obstacles = []
