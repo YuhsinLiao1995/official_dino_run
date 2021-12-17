@@ -2,6 +2,7 @@ import random
 import pygame
 from classes.Dino import Dino
 from classes.Cloud import Cloud
+from classes.Weapons import Weapon
 from classes.Obstacles import LargeCactus, SmallCactus, Bird
 import os
 from global_parameters import Parameters
@@ -16,6 +17,7 @@ def startRun():
     Parameters.isDead = False
     player = Dino(Parameters.themeOption)
     cloud = Cloud(Parameters.WIDTH)
+    weapon = Weapon(Parameters.WIDTH)
 
     pygame.display.set_icon(Parameters.logo)
     pygame.display.set_caption("Chrome Dino Runner")
@@ -121,6 +123,10 @@ def startRun():
         # drawing the clouds
         cloud.draw(Parameters.screen)
         cloud.update(speedgame, Parameters.WIDTH)
+
+        #drawing the weapon
+        weapon.draw(Parameters.screen)
+        weapon.update(speedgame, Parameters.WIDTH)
 
         # calling the player:
         player.draw(Parameters.screen)

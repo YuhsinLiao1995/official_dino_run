@@ -72,7 +72,7 @@ class Dino:
         if self.is_jumping:
             self.dino_rect.y -= (self.vel * abs(self.vel)) * 0.25  # make the dino move on the y axis
             self.vel -= 0.5  # enable the dino to go back down -- make the dino go higher or lower
-            #print("JUMPING", self.y_dino, self.vel, self.is_jumping)
+            #print("JUMPING", self.dino_rect.y, self.vel, self.is_jumping)
 
         if self.vel < -self.jump_vel:  # once the dino is back at his original y level, we put all the parameters to their normal value
             #print("BOUM", self.y_dino)
