@@ -1,8 +1,8 @@
 import random
 import pygame
 from classes.Dino import Dino
-from classes.Cloud import Cloud
-from classes.Weapons import Weapon
+from classes.Cloud import Cloud, Weapon
+from classes.Weapons import Gun
 from classes.Obstacles import LargeCactus, SmallCactus, Bird
 import os
 from global_parameters import Parameters
@@ -18,6 +18,7 @@ def startRun():
     player = Dino(Parameters.themeOption)
     cloud = Cloud(Parameters.WIDTH)
     weapon = Weapon(Parameters.WIDTH)
+    gun = Gun(Parameters.WIDTH, player.y_dino)
 
     pygame.display.set_icon(Parameters.logo)
     pygame.display.set_caption("Chrome Dino Runner")
@@ -86,6 +87,7 @@ def startRun():
                     pause = False
 
     clock = pygame.time.Clock()
+
     while run:
 
         clock.tick(120)
@@ -124,10 +126,6 @@ def startRun():
         cloud.draw(Parameters.screen)
         cloud.update(speedgame, Parameters.WIDTH)
 
-        #drawing the weapon
-        weapon.draw(Parameters.screen)
-        weapon.update(speedgame, Parameters.WIDTH)
-
         # calling the player:
         player.draw(Parameters.screen)
         player.update(user_input)
@@ -139,7 +137,6 @@ def startRun():
                 obstacles.append(LargeCactus(
                     Parameters.WIDTH, Parameters.themeOption))
             elif random.randint(0, 2) == 1:
-                #print("small obs")
                 obstacles.append(SmallCactus(
                     Parameters.WIDTH, Parameters.themeOption))
             else:
@@ -149,12 +146,21 @@ def startRun():
             obstacle.draw(Parameters.screen)
             obstacle.update(speedgame, obstacles)
 
+            #making the collision with obstacle lethal
             if player.dino_rect.colliderect(obstacle.rect):
 
                 #pygame.time.delay(2000)
                 Parameters.isDead = True
                 return Parameters.isDead
                 # menu(Parameters.ifdead)
+
+        #drawing the weapon
+        weapon.draw(Parameters.screen)
+        weapon.update(speedgame, Parameters.WIDTH)
+
+
+        print(player.dino_rect.colliderect(weapon.rect))
+
 
         score()  # we put at the end so it does not flash
 

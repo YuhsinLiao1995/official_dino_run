@@ -79,6 +79,7 @@ class Dino:
             self.is_jumping = False
             self.vel = self.jump_vel
             #print("BOUM", self.y_dino)
+        #print("dino is jumping", self.dino_rect)
 
 
     #updating variables and images
@@ -90,6 +91,7 @@ class Dino:
             self.duck()
         if self.is_jumping:
             self.jump()
+        print("Dino: ", self.dino_rect)
 
         #counting steps
         if self.run_count > 19:

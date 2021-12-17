@@ -41,8 +41,11 @@ class LargeCactus:
       ]
     self.type = random.randint(0, 2)
     self.rect = self.image[self.type].get_rect()
+    #print("1..", self.rect)
     self.rect.x = width*1.5
     self.rect.y = 380 - self.image[self.type].get_height()
+    #print("2...", self.rect)
+
 
 
   def update(self, speed, obstacles):
@@ -51,8 +54,8 @@ class LargeCactus:
       obstacles.pop()
 
   def draw(self, screen):
-    #print(self.rect.x)
     screen.blit(self.image[self.type], self.rect)
+    print("big:", self.rect)
 
 
 class SmallCactus:
@@ -95,8 +98,8 @@ class SmallCactus:
       obstacles.pop()
 
   def draw(self, screen):
-    #print(self.rect.x)
     screen.blit(self.image[self.type], self.rect)
+    print("small:", self.rect)
 
 
 class Bird:
@@ -141,6 +144,7 @@ class Bird:
       self.flap = 0
     screen.blit(self.image[self.flap //9], self.rect)
     self.flap += 1
+    print("bird:", self.rect)
 
 
 
