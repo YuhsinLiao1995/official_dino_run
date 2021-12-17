@@ -1,14 +1,18 @@
 import random
 import pygame
 from classes.Dino import Dino
-from classes.Cloud import Cloud, Weapon
-from classes.Weapons import Gun
+from classes.Cloud import Cloud
+from classes.Weapons import Gun, Weapon
 from classes.Obstacles import LargeCactus, SmallCactus, Bird
 import os
 from global_parameters import Parameters
+import tkinter as tk
+import tkinter.font as tkf
+import keyboardlayout as kl
+import keyboardlayout.tkinter as klt
 
 run = False
-
+layout_name = 'qwerty'
 
 def startRun():
     global speedgame, obstacles
@@ -22,6 +26,41 @@ def startRun():
 
     pygame.display.set_icon(Parameters.logo)
     pygame.display.set_caption("Chrome Dino Runner")
+
+    # grey = pygame.Color('grey')
+    # key_size = 60
+    # set the keyboard position and color info
+    # keyboard_info = kl.KeyboardInfo(
+    #     position=(0, 0),
+    #     padding=2,
+    #     color=~grey
+    # )
+
+    # set the letter key color, padding, and margin info in px
+    # key_info = kl.KeyInfo(
+    #     margin=10,
+    #     color=grey,
+    #     txt_color=~grey,  # invert grey
+    #     txt_font=pygame.font.SysFont('Arial', key_size//4),
+    #     txt_padding=(key_size//6, key_size//10)
+    # )
+
+    # letter_key_size = (key_size, key_size)
+    # window = tk.Tk()
+    # window.resizable(False, False)
+
+    # keyboard_layout = klt.KeyboardLayout(
+    #     layout_name,
+    #     keyboard_info,
+    #     letter_key_size,
+    #     key_info,
+    #     master = window
+    # )
+
+    # draw the keyboard on the pygame screen
+    # keyboard_layout.draw(Parameters.screen)
+    # Parameters.screen.blit(keyboard_layout, 100,100)
+    pygame.display.update()
 
 
 
@@ -158,8 +197,9 @@ def startRun():
         weapon.draw(Parameters.screen)
         weapon.update(speedgame, Parameters.WIDTH)
 
+        if player.dino_rect.colliderect(weapon.rect):
+           print("collision", player.dino_rect.colliderect(weapon.rect))
 
-        print(player.dino_rect.colliderect(weapon.rect))
 
 
         score()  # we put at the end so it does not flash
