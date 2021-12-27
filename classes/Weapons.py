@@ -24,7 +24,7 @@ class Weapons:
     elif option ==2:
       self.image = [
           pygame.image.load(os.path.join(
-        #       IMAGE_PATH, "3. Obstacles/BigObs1.png")),
+              IMAGE_PATH, "3. Obstacles/BigObs1.png")),
         #   pygame.image.load(os.path.join(
         #       IMAGE_PATH, "3. Obstacles/BigObs2.png")),
         #   pygame.image.load(os.path.join(
@@ -33,7 +33,7 @@ class Weapons:
     else:
       self.image = [
           pygame.image.load(os.path.join(
-        #       IMAGE_PATH, "3. Obstacles/BigPipe1.png")),
+              IMAGE_PATH, "3. Obstacles/BigPipe1.png")),
         #   pygame.image.load(os.path.join(
         #       IMAGE_PATH, "3. Obstacles/BigPipe2.png")),
         #   pygame.image.load(os.path.join(
