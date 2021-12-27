@@ -2,64 +2,30 @@ import random
 import pygame
 from classes.Dino import Dino
 from classes.Cloud import Cloud
-from classes.Weapons import Gun, Weapon
+from classes.Weapons import Gun, Sword
 from classes.Obstacles import LargeCactus, SmallCactus, Bird
 import os
 from global_parameters import Parameters
-import tkinter as tk
-import tkinter.font as tkf
-import keyboardlayout as kl
-import keyboardlayout.tkinter as klt
+from attack import shot, cut
 
 run = False
-layout_name = 'qwerty'
+weaponCollected = []
+cutting = False
 
 def startRun():
-    global speedgame, obstacles
+    global speedgame, obstacles, weaponCollected, cutting
     # all variables
     Parameters.point = 0
     Parameters.isDead = False
-    player = Dino(Parameters.themeOption)
+    player = Dino(Parameters.themeOption, weaponCollected)
     cloud = Cloud(Parameters.WIDTH)
-    weapon = Weapon(Parameters.WIDTH)
-    gun = Gun(Parameters.WIDTH, player.y_dino)
+    gun = Gun(Parameters.WIDTH)
+    sword = Sword(Parameters.WIDTH)
+    # gun = Gun(Parameters.WIDTH, player.y_dino)
 
     pygame.display.set_icon(Parameters.logo)
     pygame.display.set_caption("Chrome Dino Runner")
 
-    # grey = pygame.Color('grey')
-    # key_size = 60
-    # set the keyboard position and color info
-    # keyboard_info = kl.KeyboardInfo(
-    #     position=(0, 0),
-    #     padding=2,
-    #     color=~grey
-    # )
-
-    # set the letter key color, padding, and margin info in px
-    # key_info = kl.KeyInfo(
-    #     margin=10,
-    #     color=grey,
-    #     txt_color=~grey,  # invert grey
-    #     txt_font=pygame.font.SysFont('Arial', key_size//4),
-    #     txt_padding=(key_size//6, key_size//10)
-    # )
-
-    # letter_key_size = (key_size, key_size)
-    # window = tk.Tk()
-    # window.resizable(False, False)
-
-    # keyboard_layout = klt.KeyboardLayout(
-    #     layout_name,
-    #     keyboard_info,
-    #     letter_key_size,
-    #     key_info,
-    #     master = window
-    # )
-
-    # draw the keyboard on the pygame screen
-    # keyboard_layout.draw(Parameters.screen)
-    # Parameters.screen.blit(keyboard_layout, 100,100)
     pygame.display.update()
 
 
@@ -80,6 +46,30 @@ def startRun():
         if Parameters.point % 100 == 0:
           speedgame += 1 #make the game go faster
 
+    def showWeaponMenu(weaponList):
+        font = pygame.font.Font("game_over.ttf", 70)
+
+        # content = "No weapon" if weaponList == [] else if "gun" in
+        content = ""
+        if weaponList == []:
+            content = "No weapon"
+        else:
+            if "gun" in weaponList:
+                content = "Press S to shot"
+            if "sword" in weaponList:
+                content = "Press C to attack"
+            if "gun" in weaponList and "sword" in weaponList:
+                content = "Press S to shot '\n' Press C to attack"
+
+
+        text = font.render(content,True, Parameters.FONT_COLOR)
+        textRect = text.get_rect()
+        (textRectx, textRecty) = (Parameters.WIDTH/5.5, Parameters.HEIGHT // 5)
+        textRect.center = (textRectx, textRecty)
+
+        Parameters.screen.blit(text, textRect)
+        pygame.display.update()
+
     #we load the correct background
     options = ["Dino", "Pika", "Mario"]
     path = "img/1.Background/" + options[Parameters.themeOption - 1] + ".png"
@@ -98,7 +88,7 @@ def startRun():
     # making the game run
     global run
     run = True
-    speedgame = 15  # speed at which the background will move
+    speedgame = 10  # speed at which the background will move
     print(speedgame)
 
     # managing obstacles
@@ -140,6 +130,11 @@ def startRun():
             if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
                 run = False
                 paused()
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
+                shot()
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_c:
+                cutting = True
+                cut()
 
         # we make the background loop
         # we color the rest of the background in white
@@ -187,21 +182,44 @@ def startRun():
 
             #making the collision with obstacle lethal
             if player.dino_rect.colliderect(obstacle.rect):
-
-                #pygame.time.delay(2000)
-                Parameters.isDead = True
-                return Parameters.isDead
-                # menu(Parameters.ifdead)
+                print("obstacle.rect", obstacle.rect)
+                if cutting:
+                    obstacle.update(speedgame, obstacles.remove(obstacle))
+                    cutting = False
+                else:
+                    #pygame.time.delay(2000)
+                    Parameters.isDead = True
+                    weaponCollected = []
+                    return Parameters.isDead
+                    # menu(Parameters.ifdead)
 
         #drawing the weapon
-        weapon.draw(Parameters.screen)
-        weapon.update(speedgame, Parameters.WIDTH)
 
-        if player.dino_rect.colliderect(weapon.rect):
-           print("collision", player.dino_rect.colliderect(weapon.rect))
+        if "gun" not in weaponCollected:
+            gun.draw(Parameters.screen)
+            gun.update(speedgame, Parameters.WIDTH)
+
+        if "sword" not in weaponCollected:
+            sword.draw(Parameters.screen)
+            sword.update(speedgame, Parameters.WIDTH)
+
+        if player.dino_rect.colliderect(gun.rect):
+        #    global weaponCollected
+        #    print("collision", player.dino_rect.colliderect(weapon.rect))
+            weaponCollected.append("gun")
+            # gun.update(speedgame, Parameters.WIDTH, True)
+            print("weaponCollected", weaponCollected)
+
+        if player.dino_rect.colliderect(sword.rect):
+        #    global weaponCollected
+        #    print("collision", player.dino_rect.colliderect(weapon.rect))
+            weaponCollected.append("sword")
+            # gun.update(speedgame, Parameters.WIDTH, True)
+            print("weaponCollected", weaponCollected)
 
 
-
+        showWeaponMenu(weaponCollected)
+        # print("weaponCollected", weaponCollected)
         score()  # we put at the end so it does not flash
 
         pygame.display.update()

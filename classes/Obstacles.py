@@ -53,9 +53,10 @@ class LargeCactus:
     if self.rect.x < -self.rect.width:
       obstacles.pop()
 
+
   def draw(self, screen):
     screen.blit(self.image[self.type], self.rect)
-    print("big:", self.rect)
+    # print("big:", self.rect)
 
 
 class SmallCactus:
