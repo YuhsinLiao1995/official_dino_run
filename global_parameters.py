@@ -55,6 +55,7 @@ class Parameters:
     isRunnung = False
     firstTime = True
     themeOption = 0
+    isWeaponized = False
 
 
 
