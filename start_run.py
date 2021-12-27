@@ -9,13 +9,8 @@ from global_parameters import Parameters
 from attack import shot, cut
 
 run = False
-<<<<<<< HEAD
-speedgame = 15  # speed at which the background will move
-
-=======
 weaponCollected = []
 cutting = False
->>>>>>> f0d116b4da6bc8c4269d9123c000990d2f30ca29
 
 def startRun():
     global speedgame, obstacles, weaponCollected, cutting
@@ -31,13 +26,10 @@ def startRun():
     pygame.display.set_icon(Parameters.logo)
     pygame.display.set_caption("Chrome Dino Runner")
 
-<<<<<<< HEAD
-=======
     pygame.display.update()
 
 
 
->>>>>>> f0d116b4da6bc8c4269d9123c000990d2f30ca29
     def score():
         global speedgame
         Parameters.point += 1
