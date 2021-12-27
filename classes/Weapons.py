@@ -1,5 +1,4 @@
 import pygame
-from classes.Dino import Dino
 from pygame.locals import *
 import random
 import os
