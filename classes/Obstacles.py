@@ -100,7 +100,7 @@ class SmallCactus:
 
   def draw(self, screen):
     screen.blit(self.image[self.type], self.rect)
-    print("small:", self.rect)
+    # print("small:", self.rect)
 
 
 class Bird:
@@ -145,7 +145,7 @@ class Bird:
       self.flap = 0
     screen.blit(self.image[self.flap //9], self.rect)
     self.flap += 1
-    print("bird:", self.rect)
+    # print("bird:", self.rect)
 
 
 
