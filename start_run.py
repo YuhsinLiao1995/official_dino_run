@@ -1,12 +1,13 @@
 import random
+import os
 import pygame
+import textwrap3
 from classes.Dino import Dino
 from classes.Cloud import Cloud
-from classes.Weapons import Gun, Sword
+from classes.Weapons import Gun, Sword, Bullet
 from classes.Obstacles import LargeCactus, SmallCactus, Bird
-import os
 from global_parameters import Parameters
-from attack import shot, cut
+# from attack import shot, cut
 
 run = False
 weaponCollected = []
@@ -21,7 +22,6 @@ def startRun():
     cloud = Cloud(Parameters.WIDTH)
     gun = Gun(Parameters.WIDTH)
     sword = Sword(Parameters.WIDTH)
-    # gun = Gun(Parameters.WIDTH, player.y_dino)
 
     pygame.display.set_icon(Parameters.logo)
     pygame.display.set_caption("Chrome Dino Runner")
@@ -44,7 +44,9 @@ def startRun():
         Parameters.screen.blit(text, textRect)
         pygame.display.update()
         if Parameters.point % 100 == 0:
-          speedgame += 1 #make the game go faster
+
+          #make the game go faster
+          speedgame += 1
 
     def showWeaponMenu(weaponList):
         font = pygame.font.Font("game_over.ttf", 70)
@@ -59,7 +61,8 @@ def startRun():
             if "sword" in weaponList:
                 content = "Press C to attack"
             if "gun" in weaponList and "sword" in weaponList:
-                content = "Press S to shot '\n' Press C to attack"
+                content = "Press S to shot\nPress C to attack"
+
 
 
         text = font.render(content,True, Parameters.FONT_COLOR)
@@ -77,9 +80,7 @@ def startRun():
     bg_size = (bg_width, bg_height) = (bg_img.get_width(),
                                        bg_img.get_height())
 
-    # displaying the background
-    #img_coordinates = (x_pos, y_pos) = (
-        #0, Parameters.HEIGHT - 5*Parameters.bg_height)  # coordinates of the background
+    # displaying the background # coordinates of the background
     img_coordinates = (x_pos, y_pos) = (0, 0)
     Parameters.screen.blit(bg_img, (x_pos, y_pos))
     Parameters.screen.blit(
@@ -93,6 +94,10 @@ def startRun():
 
     # managing obstacles
     obstacles = []
+
+    # managing bullets
+    bullets = []
+    bulletsCount = 0
 
     # managing pause and unpause
     def paused():
@@ -121,6 +126,7 @@ def startRun():
 
         clock.tick(120)
 
+
         # we make the run possible to quit:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -130,11 +136,11 @@ def startRun():
             if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
                 run = False
                 paused()
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
-                shot()
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_c:
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_s and "gun" in weaponCollected:
+                bullets.append(Bullet(Parameters.WIDTH,player.dino_rect.y))
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_c and "sword" in weaponCollected:
                 cutting = True
-                cut()
+
 
         # we make the background loop
         # we color the rest of the background in white
@@ -151,7 +157,6 @@ def startRun():
             x_pos = 0
 
         x_pos -= speedgame
-        # print(x_pos)
 
         # recording the commands from the player
         user_input = pygame.key.get_pressed()
@@ -159,6 +164,8 @@ def startRun():
         # drawing the clouds
         cloud.draw(Parameters.screen)
         cloud.update(speedgame, Parameters.WIDTH)
+
+
 
         # calling the player:
         player.draw(Parameters.screen)
@@ -182,7 +189,7 @@ def startRun():
 
             #making the collision with obstacle lethal
             if player.dino_rect.colliderect(obstacle.rect):
-                print("obstacle.rect", obstacle.rect)
+                # print("obstacle.rect", obstacle.rect)
                 if cutting:
                     obstacle.update(speedgame, obstacles.remove(obstacle))
                     cutting = False
@@ -193,33 +200,40 @@ def startRun():
                     return Parameters.isDead
                     # menu(Parameters.ifdead)
 
-        #drawing the weapon
+                        #drawing the weapon
+            for bullet in bullets:
+                bullet.draw(Parameters.screen)
+                bullet.update(speedgame, bullets)
+                bulletsCount += 1
+                if bulletsCount >= 5:
+                    bulletsCount = 0
+                    if "gun" in weaponCollected:
+                        weaponCollected.remove('gun')
 
-        if "gun" not in weaponCollected:
+                if obstacle.rect.colliderect(bullet.rect):
+                    obstacle.update(speedgame, obstacles.remove(obstacle))
+                    bullets.remove(bullet)
+                    bullet.collide(speedgame)
+
+
+        if "gun" not in weaponCollected and Parameters.point >= 1000:
             gun.draw(Parameters.screen)
             gun.update(speedgame, Parameters.WIDTH)
 
-        if "sword" not in weaponCollected:
+        if "sword" not in weaponCollected and Parameters.point >= 500:
             sword.draw(Parameters.screen)
             sword.update(speedgame, Parameters.WIDTH)
 
-        if player.dino_rect.colliderect(gun.rect):
-        #    global weaponCollected
-        #    print("collision", player.dino_rect.colliderect(weapon.rect))
-            weaponCollected.append("gun")
-            # gun.update(speedgame, Parameters.WIDTH, True)
-            print("weaponCollected", weaponCollected)
+        if player.dino_rect.colliderect(gun.rect) and "gun" not in weaponCollected:
 
-        if player.dino_rect.colliderect(sword.rect):
+            weaponCollected.append("gun")
+
+        if player.dino_rect.colliderect(sword.rect) and "sword" not in weaponCollected:
         #    global weaponCollected
-        #    print("collision", player.dino_rect.colliderect(weapon.rect))
             weaponCollected.append("sword")
-            # gun.update(speedgame, Parameters.WIDTH, True)
-            print("weaponCollected", weaponCollected)
 
 
         showWeaponMenu(weaponCollected)
-        # print("weaponCollected", weaponCollected)
         score()  # we put at the end so it does not flash
 
         pygame.display.update()

@@ -16,7 +16,6 @@ class Dino:
 
     #initializing our dino
     def __init__(self, option, weaponList):
-        print("weaponList", weaponList)
         #regarding the image of the dino
         self.option = option
         self.weaponList = weaponList
@@ -55,6 +54,9 @@ class Dino:
         self.is_shotting = False
         self.is_cutting = False
 
+        self.is_jumpping_and_cutting = False
+        self.is_jumpping_and_shotting = False
+
         #action count
         self.run_count = 0
         self.vel = self.jump_vel
@@ -81,19 +83,25 @@ class Dino:
         # replace the running image witht the jumping image
         options = ["Dino", "Pika", "Mario"]
         img_path = "img/2. Dino/" + options[self.option - 1]
-        self.image = pygame.image.load(img_path+"/Jump.png")
-        #print("START", self.y_dino)
-        if self.is_jumping:
+
+        if self.is_jumpping_and_shotting:
+            self.image = pygame.image.load(img_path+"/Shot1.png")
+        elif self.is_jumpping_and_cutting:
+            self.image = pygame.image.load(img_path+"/Stab1.png")
+        else:
+            pygame.image.load(img_path+"/Jump.png")
+
+        if self.is_jumping :
+
             self.dino_rect.y -= (self.vel * abs(self.vel)) * 0.25  # make the dino move on the y axis
             self.vel -= 0.5  # enable the dino to go back down -- make the dino go higher or lower
-            #print("JUMPING", self.dino_rect.y, self.vel, self.is_jumping)
 
         if self.vel < -self.jump_vel:  # once the dino is back at his original y level, we put all the parameters to their normal value
             #print("BOUM", self.y_dino)
             self.is_jumping = False
             self.vel = self.jump_vel
-            #print("BOUM", self.y_dino)
-        #print("dino is jumping", self.dino_rect)
+
+
 
     # cut function
     def cut(self):
@@ -138,7 +146,9 @@ class Dino:
             self.shot()
         if self.is_cutting:
             self.cut()
-        # print("Dino: ", self.dino_rect)
+        # if self.is_jumpping_and_shotting:
+        #     self.jump()
+
 
         #counting steps
         if self.run_count > 19:
@@ -150,37 +160,63 @@ class Dino:
         if self.cut_count > 3:
             self.cut_count = 0
 
-        if not self.is_jumping:
-            if (user_input[pygame.K_UP] or user_input[pygame.K_SPACE]) and self.dino_rect.y == self.y_dino:
+        if not self.is_jumping :
+            if user_input[pygame.K_s] and user_input[pygame.K_SPACE] and "gun" in self.weaponList and self.dino_rect.y == self.y_dino:
                 self.is_running = False
                 self.is_ducking = False
                 self.is_jumping = True
                 self.is_shotting = False
                 self.is_cutting = False
+                self.is_jumpping_and_shotting = True
+                self.is_jumpping_and_cutting = False
+            elif user_input[pygame.K_c] and user_input[pygame.K_SPACE] and "sword" in self.weaponList and self.dino_rect.y == self.y_dino:
+                self.is_running = False
+                self.is_ducking = False
+                self.is_jumping = True
+                self.is_shotting = False
+                self.is_cutting = False
+                self.is_jumpping_and_shotting = False
+                self.is_jumpping_and_cutting = True
+            elif (user_input[pygame.K_UP] or user_input[pygame.K_SPACE]) and self.dino_rect.y == self.y_dino:
+                self.is_running = False
+                self.is_ducking = False
+                self.is_jumping = True
+                self.is_shotting = False
+                self.is_cutting = False
+                self.is_jumpping_and_shotting = False
+                self.is_jumpping_and_cutting = False
             elif user_input[pygame.K_DOWN]:
                 self.is_running = False
                 self.is_ducking = True
                 self.is_jumping = False
                 self.is_shotting = False
                 self.is_cutting = False
+                self.is_jumpping_and_shotting = False
+                self.is_jumpping_and_cutting = False
             elif user_input[pygame.K_s] and "gun" in self.weaponList:
                 self.is_running = False
                 self.is_ducking = False
                 self.is_jumping = False
                 self.is_shotting = True
                 self.is_cutting = False
+                self.is_jumpping_and_shotting = False
+                self.is_jumpping_and_cutting = False
             elif user_input[pygame.K_c] and "sword" in self.weaponList:
                 self.is_running = False
                 self.is_ducking = False
                 self.is_jumping = False
                 self.is_shotting = False
                 self.is_cutting = True
+                self.is_jumpping_and_shotting = False
+                self.is_jumpping_and_cutting = False
             else:
                 self.is_jumping = False
                 self.is_ducking = False
                 self.is_running = True
                 self.is_shotting = False
                 self.is_cutting = False
+                self.is_jumpping_and_shotting = False
+                self.is_jumpping_and_cutting = False
 
 
   #displaying the dino corresponding to each action
