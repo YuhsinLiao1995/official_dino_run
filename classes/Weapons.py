@@ -35,40 +35,57 @@ class Sword(Gun):
     WEAPON = pygame.image.load(os.path.join(IMAGE_PATH, "5. Weapons/Weapon2.png"))
     WEAPON = pygame.transform.scale(WEAPON, (100, 100))
 
-class Bullet:
-    # BIRD_HEIGHT = [250, 290, 300]
 
-    def __init__(self):
+
+
+class Bullet:
+
+    x_dino = 80
+    y_dino = 320
+
+    def __init__(self, width, dino_rect_y):
+        BULLET1 = pygame.image.load(os.path.join(IMAGE_PATH, "5. Weapons/BulletBill1.png"))
+        BULLET1 = pygame.transform.smoothscale(BULLET1, (50, 25))
+        BULLET2 = pygame.image.load(os.path.join(IMAGE_PATH, "5. Weapons/BulletBill2.png"))
+        BULLET2 = pygame.transform.smoothscale(BULLET2, (50, 25))
+        BULLET3 = pygame.image.load(os.path.join(IMAGE_PATH, "5. Weapons/BulletBill3.png"))
+        BULLET3 = pygame.transform.smoothscale(BULLET2, (50, 25))
+        BULLET4 = pygame.image.load(os.path.join(IMAGE_PATH, "5. Weapons/BulletBill4.png"))
+        BULLET4 = pygame.transform.smoothscale(BULLET2, (50, 25))
         self.shot_count = 0
-        self.shotting_image = [pygame.image.load(os.path.join(IMAGE_PATH, "5. Weapons/BulletBill1.png")),
-                              pygame.image.load(os.path.join(IMAGE_PATH, "5. Weapons/BulletBill2.png")),
-                              pygame.image.load(os.path.join(IMAGE_PATH, "5. Weapons/BulletBill3.png")),
-                              pygame.image.load(os.path.join(IMAGE_PATH, "5. Weapons/BulletBill4.png"))]
+        self.shotting_image = [BULLET1,BULLET2,BULLET3,BULLET4]
         self.image = self.shotting_image[0]
-        self.width = self.shotting_image[0].get_width()
+        self.image = pygame.transform.scale(self.image, (10, 10))
+        self.width = width
         self.type = 0
         self.rect = self.shotting_image[self.type].get_rect()
-        self.rect.x = 80
-        self.rect.y = 200
+        self.rect.x = self.x_dino
+        self.rect.y = dino_rect_y + 30
+        self.isShooting = False
 
-    def update(self, speed, user_input):
-        if user_input[pygame.K_s]:
+
+    def update(self, speed, bullets):
+        if self.isShooting is True:
             #counting shot
             if self.shot_count > 3:
                 self.shot_count = 0
-            self.rect.x += speed
-            print("speed", speed)
+            self.rect.x += speed*5
+        if self.rect.x > self.width:
+            bullets.pop()
+            self.rect.x = 80
 
-        # if self.rect.x < -self.rect.width:
-        #     obstacles.pop()
+    def collide(self, speed):
+        if self.isShooting is True:
+            #counting shot
+            if self.shot_count > 3:
+                self.shot_count = 0
+            self.rect.x += speed*2
+            self.rect.x = 80
 
-    def draw(self, screen, user_input):
+    def draw(self, screen):
+        self.image = self.shotting_image[self.shot_count // 3]
+        screen.blit(self.image, (self.rect.x, self.rect.y))
+        print("dino_rect_y", self.rect.y)
+        self.shot_count += 1
+        self.isShooting = True
 
-        # if self.flap >= 17:
-        #     self.flap = 0
-        if user_input[pygame.K_s]:
-            self.image = self.shotting_image[self.shot_count // 3]
-            screen.blit(self.image, (self.rect.x, self.rect.y))
-            self.shot_count += 1
-            # print("speed", speed)
-            print("bulllllllet:", self.rect.x)
