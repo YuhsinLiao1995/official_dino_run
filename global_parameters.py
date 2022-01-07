@@ -40,13 +40,6 @@ class Parameters:
         pygame.image.load(os.path.join(IMAGE_PATH, "3. Obstacles/Bird2.png"))
     ]
 
-    # screen and background settings
-    #bg_img = pygame.image.load("img/1.Background/DinoTrack.png")  # load the track image
-    #bg_size = (bg_width, bg_height) = (bg_img.get_width(),
-                                       #bg_img.get_height())
-    #print(bg_size)
-    # getting the track image size
-
     # implementing the logo and caption of the game
     logo = pygame.image.load(os.path.join(IMAGE_PATH, "1.Background/Logo.png"))
 
