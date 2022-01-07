@@ -1,7 +1,7 @@
 import random
 import os
 import pygame
-import textwrap3
+import textwrap
 from classes.Dino import Dino
 from classes.Cloud import Cloud
 from classes.Weapons import Gun, Sword, Bullet
