@@ -32,7 +32,9 @@ def startRun():
 
 
 
-    def score():
+
+    def showScoreWeapon(weaponList):
+
         global speedgame
         Parameters.point += 1
         font = pygame.font.Font("game_over.ttf", 70)
@@ -44,13 +46,12 @@ def startRun():
         textRect.center = (textRectx, textRecty)
 
         Parameters.screen.blit(text, textRect)
-        pygame.display.update()
+        #pygame.display.update()
         if Parameters.point % 100 == 0:
 
           #make the game go faster
           speedgame += 1
 
-    def showWeaponMenu(weaponList):
         font = pygame.font.Font("game_over.ttf", 70)
 
 
@@ -222,9 +223,8 @@ def startRun():
         #    global weaponCollected
             weaponCollected.append("sword")
 
+        #score()
+        showScoreWeapon(weaponCollected)
 
-        showWeaponMenu(weaponCollected)
-        # we put at the end so it does not flash
-        score()
 
         pygame.display.update()
