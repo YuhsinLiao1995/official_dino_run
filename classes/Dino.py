@@ -35,12 +35,18 @@ class Dino:
         self.image = self.running_image[0]  # first image of the dino
         ## update shotting img
         self.shotting_image = [pygame.image.load(img_path+"/Shot1.png"),
-                              pygame.image.load(img_path+"/Shot2.png")]
+                              pygame.image.load(img_path+"/Shot2.png"),
+                              pygame.image.load(img_path+"/Shot3.png"),
+                              pygame.image.load(img_path+"/Shot4.png")
+                              ]
 
 
         ## update cutting img
         self.cutting_image = [pygame.image.load(img_path+"/Stab1.png"),
-                              pygame.image.load(img_path+"/Stab2.png")]
+                              pygame.image.load(img_path+"/Stab2.png"),
+                              pygame.image.load(img_path+"/Stab3.png"),
+                              pygame.image.load(img_path+"/Stab2.png"),
+                              ]
 
         #regarding the position of the dino
         self.dino_rect = self.image.get_rect()
@@ -85,11 +91,11 @@ class Dino:
         img_path = "img/2. Dino/" + options[self.option - 1]
 
         if self.is_jumpping_and_shotting:
-            self.image = pygame.image.load(img_path+"/Shot1.png")
+            self.image = pygame.image.load(img_path+"/ShotJump.png")
         elif self.is_jumpping_and_cutting:
-            self.image = pygame.image.load(img_path+"/Stab1.png")
+            self.image = pygame.image.load(img_path+"/StabJump.png")
         else:
-            pygame.image.load(img_path+"/Jump.png")
+            self.image = pygame.image.load(img_path+"/Jump.png")
 
         if self.is_jumping :
 
@@ -110,7 +116,7 @@ class Dino:
         img_path = "img/2. Dino/" + options[self.option - 1]
         if self.is_cutting:
             # vary from image 1 to image 4
-            self.image = self.cutting_image[self.cut_count // 2]
+            self.image = self.cutting_image[self.cut_count // 5]
             self.dino_rect.x = self.x_dino
             self.dino_rect.y = self.y_dino
             self.cut_count += 1
@@ -122,7 +128,7 @@ class Dino:
         img_path = "img/2. Dino/" + options[self.option - 1]
         if self.is_shotting:
             # vary from image 1 to image 4
-            self.image = self.shotting_image[self.shot_count // 2]
+            self.image = self.shotting_image[self.shot_count // 5]
             self.dino_rect.x = self.x_dino
             self.dino_rect.y = self.y_dino
             self.shot_count += 1
@@ -154,10 +160,10 @@ class Dino:
         if self.run_count > 19:
             self.run_count = 0
         #counting shot
-        if self.shot_count > 3:
+        if self.shot_count > 19:
             self.shot_count = 0
         #counting cut
-        if self.cut_count > 3:
+        if self.cut_count > 19:
             self.cut_count = 0
 
         if not self.is_jumping :
