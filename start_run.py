@@ -1,13 +1,10 @@
 import random
-import os
 import pygame
-import textwrap
 from classes.Dino import Dino
 from classes.Cloud import Cloud
 from classes.Weapons import Gun, Sword, Bullet
 from classes.Obstacles import LargeCactus, SmallCactus, Bird
 from global_parameters import Parameters
-# from attack import shot, cut
 
 run = False
 weaponCollected = []
@@ -28,6 +25,11 @@ def startRun():
 
     pygame.display.update()
 
+    # making the game run
+    global run
+    run = True
+    speedgame = 10  # speed at which the background will move
+
 
 
     def score():
@@ -38,7 +40,7 @@ def startRun():
         text = font.render("Point: " + str(Parameters.point),
                            True, Parameters.FONT_COLOR)
         textRect = text.get_rect()
-        (textRectx, textRecty) = (Parameters.WIDTH - 150, Parameters.HEIGHT // 4.5)
+        (textRectx, textRecty) = (Parameters.WIDTH - 150, Parameters.HEIGHT // 6)
         textRect.center = (textRectx, textRecty)
 
         Parameters.screen.blit(text, textRect)
@@ -51,26 +53,20 @@ def startRun():
     def showWeaponMenu(weaponList):
         font = pygame.font.Font("game_over.ttf", 70)
 
-        # content = "No weapon" if weaponList == [] else if "gun" in
-        content = ""
-        if weaponList == []:
-            content = "No weapon"
-        else:
-            if "gun" in weaponList:
-                content = "Press S to shot"
-            if "sword" in weaponList:
-                content = "Press C to attack"
-            if "gun" in weaponList and "sword" in weaponList:
-                content = "Press S to shot\nPress C to attack"
 
+        ShotContent = "Press S to shot" if "gun" in weaponList else ""
+        SwordContent = "Press C to attack by the sword" if "sword" in weaponList else ""
 
+        textGun = font.render(ShotContent,True, Parameters.FONT_COLOR)
+        textSword = font.render(SwordContent,True, Parameters.FONT_COLOR)
 
-        text = font.render(content,True, Parameters.FONT_COLOR)
-        textRect = text.get_rect()
-        (textRectx, textRecty) = (Parameters.WIDTH/5.5, Parameters.HEIGHT // 5)
-        textRect.center = (textRectx, textRecty)
+        textRectGun = textGun.get_rect()
+        textRectSword = textSword.get_rect()
+        textRectGun.topleft = (Parameters.WIDTH/12, Parameters.HEIGHT // 8)
+        textRectSword.topleft = (Parameters.WIDTH/12, Parameters.HEIGHT // 16)
 
-        Parameters.screen.blit(text, textRect)
+        Parameters.screen.blit(textGun, textRectGun)
+        Parameters.screen.blit(textSword, textRectSword)
         pygame.display.update()
 
     #we load the correct background
@@ -86,11 +82,7 @@ def startRun():
     Parameters.screen.blit(
         bg_img, (x_pos + bg_width, y_pos))
 
-    # making the game run
-    global run
-    run = True
-    speedgame = 10  # speed at which the background will move
-    print(speedgame)
+
 
     # managing obstacles
     obstacles = []
@@ -189,18 +181,16 @@ def startRun():
 
             #making the collision with obstacle lethal
             if player.dino_rect.colliderect(obstacle.rect):
-                # print("obstacle.rect", obstacle.rect)
                 if cutting:
                     obstacle.update(speedgame, obstacles.remove(obstacle))
                     cutting = False
                 else:
-                    #pygame.time.delay(2000)
+                    pygame.time.delay(1000)
                     Parameters.isDead = True
                     weaponCollected = []
                     return Parameters.isDead
-                    # menu(Parameters.ifdead)
 
-                        #drawing the weapon
+            #drawing the weapon
             for bullet in bullets:
                 bullet.draw(Parameters.screen)
                 bullet.update(speedgame, bullets)
@@ -234,6 +224,7 @@ def startRun():
 
 
         showWeaponMenu(weaponCollected)
-        score()  # we put at the end so it does not flash
+        # we put at the end so it does not flash
+        score()
 
         pygame.display.update()

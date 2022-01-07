@@ -22,7 +22,6 @@ class Dino:
         #select correct folder
         options = ["Dino", "Pika", "Mario"]
         img_path= "img/2. Dino/" + options[option - 1]
-        #print(img_path+"/Run1.png")
         self.running_image = [pygame.image.load(img_path+"/Run1.png"),
                               pygame.image.load(img_path+"/Run2.png"),
                               pygame.image.load(img_path+"/Run3.png"),
@@ -98,12 +97,13 @@ class Dino:
             self.image = pygame.image.load(img_path+"/Jump.png")
 
         if self.is_jumping :
+            # make the dino move on the y axis
+            self.dino_rect.y -= (self.vel * abs(self.vel)) * 0.25
+            # enable the dino to go back down -- make the dino go higher or lower
+            self.vel -= 0.5
 
-            self.dino_rect.y -= (self.vel * abs(self.vel)) * 0.25  # make the dino move on the y axis
-            self.vel -= 0.5  # enable the dino to go back down -- make the dino go higher or lower
-
-        if self.vel < -self.jump_vel:  # once the dino is back at his original y level, we put all the parameters to their normal value
-            #print("BOUM", self.y_dino)
+        # once the dino is back at his original y level, we put all the parameters to their normal value
+        if self.vel < -self.jump_vel:
             self.is_jumping = False
             self.vel = self.jump_vel
 
@@ -134,11 +134,6 @@ class Dino:
             self.shot_count += 1
 
 
-
-
-
-
-
     #updating variables and images
     def update(self, user_input):
         #updating action booleans
@@ -152,8 +147,6 @@ class Dino:
             self.shot()
         if self.is_cutting:
             self.cut()
-        # if self.is_jumpping_and_shotting:
-        #     self.jump()
 
 
         #counting steps
