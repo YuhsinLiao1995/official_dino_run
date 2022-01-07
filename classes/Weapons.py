@@ -28,7 +28,6 @@ class Gun:
 
     def draw(self, screen):
         screen.blit(self.image, (self.rect.x, self.rect.y))
-        # print(self.rect)
 
 class Sword(Gun):
 
@@ -85,7 +84,6 @@ class Bullet:
     def draw(self, screen):
         self.image = self.shotting_image[self.shot_count // 3]
         screen.blit(self.image, (self.rect.x, self.rect.y))
-        print("dino_rect_y", self.rect.y)
         self.shot_count += 1
         self.isShooting = True
 

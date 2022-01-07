@@ -1,7 +1,6 @@
 import pygame
 from global_parameters import Parameters
 
-
 pygame.font.init()
 font = pygame.font.Font("freesansbold.ttf", 30)
 fontTitle = pygame.font.Font("freesansbold.ttf", 50)
@@ -20,7 +19,6 @@ def button(i, x, y, w, h, img, title):
     if x + w > mouse[0] > x and y + h > mouse[1] > y:
         if click[0] == 1:
             Parameters.themeOption = i
-            print(Parameters.themeOption)
 
 def menu():
     run = True
